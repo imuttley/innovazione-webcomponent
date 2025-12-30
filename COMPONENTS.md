@@ -1,4 +1,4 @@
-# Documentazione Web Components "innovazione-filter"
+# Documentazione Web Components "innovazione"
 
 Questa libreria esporta diversi Web Components basati su React, registrati tramite `react-to-webcomponent`.
 
@@ -11,6 +11,8 @@ Questo componente fornisce l'interfaccia di ricerca principale, includendo la ba
 | Attributo | Tipo     | Descrizione                                 |
 | :-------- | :------- | :------------------------------------------ |
 | `baseurl` | `string` | URL di base per le chiamate API di ricerca. |
+
+_fissato su costante `BASE_URL`_ 2025-12-30
 
 ### Funzionamento
 
@@ -115,3 +117,7 @@ Inviato da `innovazione-filter` verso `innovazione-search`.
 | `innovazione-filterEvent`  | `FilterEvent`  | Notifica i cambiamenti nei filtri selezionati.              |
 | `innovazione-searchEvent`  | `SearchEvent`  | Notifica l'arrivo di nuovi risultati di ricerca o filtrati. |
 | `innovazione-resultsEvent` | `ResultsEvent` | Notifica interazioni o aggiornamenti nell'elenco risultati. |
+
+**schema di design**
+
+![schema](./schema_0.1.jpg)

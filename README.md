@@ -64,3 +64,7 @@ load and use webcomponents in a semantic enriched html
 </body>
 </html>
 ```
+
+## specs italian version
+
+[specs](./COMPONENTS.md)

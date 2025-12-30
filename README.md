@@ -19,19 +19,35 @@ load and use webcomponents in a semantic enriched html
 </head>
 <body>
     <!-- ... -->
-    <script type="module" crossorigin src="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent@0.0.1/dist/innovazione-webcomp.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent@0.0.1/dist/innovazione-webcomp.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent@latest/dist/innovazione-webcomp.css">
+    <script type="module" crossorigin src="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent@latest/dist/innovazione-webcomp.js"></script>
     <!-- ... -->
 <body>
+
     <!-- ... -->
     <!-- search events innovazione-search for data source -->
-    <innovazione-search baseurl="https://ricerca-innovazione.enea.it"></innovazione-search>
+    <section id="search-bar">
+        <div class="container h-150">
+            <innovazione-search baseurl="https://ricerca-innovazione.enea.it"></innovazione-search>
+        </div>
+    </section>
     <!-- ... -->
+
     <!-- results events innovazione-results for click -->
-    <innovazione-results id="resultsid" baseurl="https://ricerca-innovazione.enea.it"></innovazione-results>
+    <section id="results-list">
+        <div class="container h-400">
+            <innovazione-results baseurl="https://ricerca-innovazione.enea.it"></innovazione-results>
+        </div>
+    </section>
+
     <!-- ... -->
-    <innovazione-event-logger></innovazione-event-logger>
+    <section id="event-logger">
+        <div class="container h-50">
+            <innovazione-event-logger></innovazione-event-logger>
+        </div>
+    </section>
     <!-- ... -->
+
 </body>
 </html>
 ```

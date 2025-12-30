@@ -120,4 +120,4 @@ Inviato da `innovazione-filter` verso `innovazione-search`.
 
 **schema di design**
 
-![schema](./schema_0.1.jpg)
+![schema](./schema-0.2.png)

@@ -17,6 +17,7 @@ import ReactDOM from "react-dom/client";
 import { EventLogger } from "./component/EventLogger";
 import { Results } from "./component/Results";
 import { SearchBasic } from "./component/SearchBasic";
+import welcome from "./component/lib/welcome";
 
 
 
@@ -60,6 +61,8 @@ const eventLoggerComponent = r2wc(EventLogger, React, ReactDOM as any, {
 });
 customElements.define("innovazione-event-logger", eventLoggerComponent);
 /* end of logger */
+
+welcome();
 
 const elem = document.getElementById("root") || null;
 

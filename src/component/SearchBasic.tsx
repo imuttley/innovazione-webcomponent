@@ -7,10 +7,8 @@ import * as dicten from "./ui/en.json";
 import { faMailBulk, faPlusCircle, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { classify, scheda, SearchResult, sums } from "./lib/type";
-import { extractSchedanum } from "./lib/utils";
-import { FormTTEC } from "./ui/FormTTEC";
-import Filters from "./Filters";
 import SearchForm from "./ui/SearchForm";
+import { BASE_URL } from "./contants";
 
 interface SearchInterfaceProps {
     baseurl: string;
@@ -45,7 +43,7 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
     };
 
     useEffect(() => {
-        fetch('https://ricerca-innovazione.enea.it/v1/summarizepublic').then((e) => e.json().then((r: sums) => {
+        fetch(`${BASE_URL}/v1/summarizepublic`).then((e) => e.json().then((r: sums) => {
             setRecords(r.records);
             setFilteredRecords(r.records);
             setClsGrf(r.categories);
@@ -70,7 +68,7 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
     const handleSearchInternal = useCallback(async (query: string, prevResults: SearchResult[]) => {
         setIsSearching(true);
         try {
-            const response = await fetch('https://ricerca-innovazione.enea.it/v1/basicsearch', {
+            const response = await fetch(`${BASE_URL}/v1/basicsearch`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

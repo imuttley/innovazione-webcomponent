@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useDictionary } from './DictionaryProvider';
-import { getDictionary } from './dictionaries';
 import * as dictit from './it.json';
 import * as dicten from './en.json';
 

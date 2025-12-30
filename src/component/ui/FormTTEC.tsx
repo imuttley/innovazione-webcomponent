@@ -4,6 +4,7 @@ import { decode } from "html-entities";
 import { useEffect, useState } from "react";
 import * as dictit from "./it.json";
 import * as dicten from "./en.json";
+import { BASE_URL } from "../contants";
 
 interface formTTECProps {
     width: number;
@@ -35,7 +36,7 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
     const dict = lang === 'it' ? dictit : dicten;
 
     const getThumb = async () => {
-        const resp = await fetch(`https://ricerca-innovazione.enea.it/v1/cardthumb/${cardnumber}`);
+        const resp = await fetch(`${BASE_URL}/v1/cardthumb/${cardnumber}`);
         if (resp.status === 200) {
             const thumb = await resp.json() as { src: string };
             setThumb(thumb.src);
@@ -46,7 +47,7 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
         if (cardnumber !== undefined) {
             const askform = async () => {
                 //const resp = await fetch(`/api/form/${cardnumber}`);
-                const resp = await fetch(`https://ricerca-innovazione.enea.it/v1/publiccard/${cardnumber}`);
+                const resp = await fetch(`${BASE_URL}/v1/publiccard/${cardnumber}`);
                 if (resp.status === 200) {
                     // const form = JSON.parse(await resp.text()) as formTTEC;
                     const form = await resp.json() as formTTEC;
@@ -102,7 +103,7 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
         <div className={`flex max-h-[${3 * height}px] justify-center transition-opacity duration-300 ease-in-out  ${hidden ? "opacity-50" : "opacity-100"}`}>
             {/*restrict card **max-w-4xl** */}
             <div className="w-full mx-auto p-4">
-                <div onClick={() => window.location.href = `/scheda/${lang}/${slug}`} className="bg-background-light dark:bg-background-dark shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-primary/20 dark:border-primary/30 cursor-pointer hover:bg-gray-200">
+                <div onClick={() => window.location.href = `${BASE_URL}/scheda/${lang}/${slug}`} className="bg-background-light dark:bg-background-dark shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-primary/20 dark:border-primary/30 cursor-pointer hover:bg-gray-200">
                     {/* no badge 2025-11-20*/}
                     {/* Badge of scores or none */}
                     {true && score !== null &&

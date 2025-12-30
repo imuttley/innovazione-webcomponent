@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, type ChangeEvent, type FormEvent, type EventHandler, type MouseEventHandler, useEffect } from 'react';
 import * as dictit from './it.json';
 import * as dicten from './en.json';
+import { BASE_URL } from '../contants';
 
 interface SearchFormProps {
     onSearch: (query: string) => void;
@@ -32,7 +33,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, onFilter, onApplyFilt
     };
 
     const fetchSuggestions = async () => {
-        const newSuggestions = await fetch(`https://ricerca-innovazione.enea.it/v1/publicsuggestions/${lang}`);
+        const newSuggestions = await fetch(`${BASE_URL}/v1/publicsuggestions/${lang}`);
         const data = await newSuggestions.json();
         if (data && data.length > 0) {
             setSuggestions(data);

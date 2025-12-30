@@ -2,9 +2,10 @@
 
 a smart web component for ENEA to search and filter TECs (Technical and Engineering Competencies) and show results
 
-the main idea is to use webcomponents to create a smart search and filter system for TECs (Technical and Engineering Competencies) and show results in a grid on a custom html page, without any backend or database but using only public APIs of ENEA, with a frontend only approach and a semantic enriched html page, managing events and states with custom events and custom elements, and using tailwindcss for styling.
-Authoring of webcomponents is done with react and typescript, and the build process is done with bun.
-Data is fetched from authorized public APIs of ENEA for managing autority of produced data.
+the main idea is to use webcomponents to create a smart search and filter system for TECs (Technical and Engineering Competencies) and show results in a grid on a custom html page, using public APIs of ENEA, with a frontend only approach and a semantic enriched html page, managing events and states with custom events and custom elements, and using tailwindcss for styling.
+
+Authoring of webcomponents is done with react and typescript ( TODO migrate to react uikit from designers-italia.it ), and the build process is done with bun.
+Data is fetched from public APIs of ENEA for managing autority of produced data.
 
 ## Features
 

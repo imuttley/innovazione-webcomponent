@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { classify, scheda, SearchResult, sums } from "./lib/type";
 import SearchForm from "./ui/SearchForm";
 import { BASE_URL } from "./contants";
+import welcome from "./lib/welcome";
 
 interface SearchInterfaceProps {
     baseurl: string;
@@ -52,6 +53,7 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
             setLics(r.licenses);
             setOfftec(r.offtecs);
         }));
+        welcome();
         window.addEventListener('innovazione-filterEvent', handleFilterEvent as EventListener);
         return () => {
             window.removeEventListener('innovazione-filterEvent', handleFilterEvent as EventListener);

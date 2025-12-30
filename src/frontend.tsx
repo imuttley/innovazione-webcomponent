@@ -62,7 +62,6 @@ const eventLoggerComponent = r2wc(EventLogger, React, ReactDOM as any, {
 customElements.define("innovazione-event-logger", eventLoggerComponent);
 /* end of logger */
 
-welcome();
 
 const elem = document.getElementById("root") || null;
 

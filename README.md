@@ -19,8 +19,8 @@ load and use webcomponents in a semantic enriched html
 </head>
 <body>
     <!-- ... -->
-    <script type="module" crossorigin src="https://jsdelivr.net/gh/imuttley/innovazione-webcomp@latest/dist/innovazione-webcomp.js"></script>
-    <link rel="stylesheet" href="https://jsdelivr.net/gh/imuttley/innovazione-webcomp@latest/dist/innovazione-webcomp.css">
+    <script type="module" crossorigin src="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent.git@dist/innovazione-webcomp.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent.git@dist/innovazione-webcomp.css">
     <!-- ... -->
 <body>
     <!-- ... -->

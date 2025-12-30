@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+    <title>Bun + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./frontend.tsx"></script>
+    <!-- search events innovazione-search for data source -->
+    <innovazione-search baseurl="https://ricerca-innovazione.enea.it"></innovazione-search> 
+    <!-- filter events innovazione-filter for apply filter -->
+    <!-- <innovazione-filter id="filterid" rights='[{"cls": "Open Source"}]' applications='[{"cls": "app1"},{"cls": "app2"}]' technologies='[{"cls": "ot1"},{"cls": "ot2"}]' licenses='[{"cls": "lic1"},{"cls": "lic2"}]' trl='{"min": 0, "max": 90}' showfilter="true"></innovazione-filter> -->
+    <!-- results events innovazione-results for click -->
+    <innovazione-results id="resultsid" baseurl="https://ricerca-innovazione.enea.it"></innovazione-results>
+
+    <innovazione-event-logger></innovazione-event-logger>
+
+    
+  </body>
+</html>

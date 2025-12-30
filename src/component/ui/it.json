@@ -1,0 +1,101 @@
+{
+    "home": {
+        "search": "Ricerca"
+    },
+    "layout": {
+        "enea": "Agenzia nazionale per le nuove tecnologie, l'energia e lo sviluppo economico sostenibile",
+        "followus": "Seguici su:",
+        "altlogo": "",
+        "alttwitter": "",
+        "altfb": "",
+        "altX": "",
+        "altLinked": "",
+        "altInsta": ""
+    },
+    "error": {
+        "not-found": "non trovato"
+    },
+    "scheda": {
+        "category": "Categoria",
+        "department": "Dipartimento",
+        "institute": "Instituto",
+        "laboratory": "Laboratorio",
+        "back": "Torna alla ricerca",
+        "description": "Descrizione",
+        "problem": "Problema da risolvere",
+        "sectors": "Settori applicativi",
+        "TRL": "Maturità tecnologica",
+        "date": "Data di aggiornamento",
+        "license": "Brevetto disponibile per il licensing",
+        "TRLtext": "Maturità tecnologica",
+        "force": "Punti di forza",
+        "advantages": "Aspetti innovativi e vantaggi",
+        "applications": "Possibili applicazioni",
+        "personnel": "Gruppo di ricerca coinvolto",
+        "tecnologie": "TECNOLOGIE",
+        "servizi": "SERVIZI",
+        "impianti e infrastrutture": "IMPIANTI e INFRASTRUTTURE"
+    },
+    "head": {
+        "dipt": "Direzione Trasferimento Tecnologico",
+        "title": "Raccolta di Tecnologie e competenze ENEA",
+        "subtitle": "Ricerca, visiona e seleziona le schede tra le tecnologie, i servizi e le infrastrutture di ENEA. Potrai al termine chiedere informazioni più dettagliate compilando il form e inviando una mail.",
+        "backtohome": "torna alla home",
+        "backtosearch": "torna alla ricerca",
+        "admintitle": "Administrator"
+    },
+    "footer": {
+        "mailtitle": "invia una mail",
+        "contact": "Contattaci",
+        "bottomsection": {
+            "title": "Non hai trovato quello che cerchi o vuoi ulteriori informazioni sulle collaborazioni e i servizi?",
+            "subtitle": "Scopri come le nostre competenze possono supportare la tua impresa o la tua impresa istituzione. Siamo a disposizione per discutere progetti specifici e soluzioni su misura."
+        },
+        "copy": "2025 disegno da ENEA - Tutti i diritti riservati - versione 1.3b - fatto con Next.js , d3.js e tailwind CSS"
+    },
+    "slideTRL": {
+        "label": "raggio TRL",
+        "minlabel": "Osservati i principi fondamentali",
+        "maxlabel": "Sistema reale provato in ambiente operativo"
+    },
+    "verticalSlider": {
+        "title": "Scorri le schede con i pulsanti Sù e Giù",
+        "upbutton": "Sù",
+        "downbutton": "Giù"
+    },
+    "piechart": {
+        "label": "Schede verticali applicativi",
+        "magicalt": "mostra sintesi"
+    },
+    "search": {
+        "filter": "Filtri",
+        "match": "Contiene",
+        "maybe": "Forse intendevi",
+        "nolowrank": "I risultati ottenuti non soddisfano perfettamente la tua richiesta, contatta i nostri esperti per ulteriori informazioni o supporto. Di seguito i risultati che si avvicinano a quanto richiesto",
+        "noresults": "Nessun documento trovato",
+        "cleartext": "Pulisci query",
+        "suggestion": "Cerca tra i suggerimenti",
+        "filteralt": "visualizza/nascondi filtri",
+        "label": "Ricerca",
+        "wait": "Ricercando...",
+        "suggestedLabel": "Esempi di ricerca",
+        "textPlaceholder": "Ricerca tra le schede o vedi i suggerimenti...",
+        "description": "Ricerca inserendo le parole chiave, o applicando i filtri.",
+        "showall": "Mostra tutti",
+        "suggested": [
+            "cosa posso utilizzare per il recupero di metalli preziosi ?",
+            "coltivazioni idroponiche",
+            "come posso caratterizzare il legno in situ ?"
+        ],
+        "clearfilters": "Pulisci filtri",
+        "searchfilters": "Filtra schede",
+        "applyfilters": "Mostra schede filtrate"
+    },
+    "backbutton": {
+        "label": "Indietro alla ricerca",
+        "title": "Indietro"
+    },
+    "status": {
+        "empty": "intenzionalmente vuoto"
+    }
+}

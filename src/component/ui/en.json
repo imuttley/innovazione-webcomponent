@@ -1,0 +1,101 @@
+{
+    "home": {
+        "search": "Search"
+    },
+    "layout": {
+        "enea": "National Agency for New Technologies, Energy and Sustainable Economic Development",
+        "followus": "Follow us:",
+        "altlogo": "",
+        "alttwitter": "",
+        "altfb": "",
+        "altX": "",
+        "altLinked": "",
+        "altInsta": ""
+    },
+    "error": {
+        "not-found": "not found"
+    },
+    "scheda": {
+        "category": "Category",
+        "department": "Department",
+        "institute": "Institute",
+        "laboratory": "Laboratory",
+        "back": "Back to search",
+        "description": "Description",
+        "problem": "Problem to solve",
+        "sectors": "Application sectors",
+        "TRL": "Technological Maturity",
+        "date": "Revision date",
+        "license": "Patent Available for Licensing",
+        "TRLtext": "Technological maturity",
+        "force": "Strengths",
+        "advantages": "Innovative aspects and advantages",
+        "applications": "Admissible applications",
+        "personnel": "Research group involved",
+        "tecnologie": "TECHNOLOGIES",
+        "servizi": "SERVICES",
+        "impianti e infrastrutture": "PLANTS and INFRASTRUCTURES"
+    },
+    "head": {
+        "dipt": "Technology Transfer Department",
+        "title": "Collection of ENEA technology and expertise",
+        "subtitle": "Search, view, and select information from ENEA's technologies, services, and infrastructures. You can then request more detailed information by filling out the form and sending an email.",
+        "backtohome": "back to home",
+        "backtosearch": "back to search",
+        "admintitle": "Administrator"
+    },
+    "footer": {
+        "mailtitle": "send a mail",
+        "contact": "Contact Us",
+        "bottomsection": {
+            "title": "Didn't find what you were looking for or would like more information about our partnerships and services?",
+            "subtitle": "Find out how our expertise can support your business or institutional organization. We're available to discuss specific projects and customized solutions."
+        },
+        "copy": "2025 designed by ENEA - all rights reserved - version 1.3b - made with Next.js , d3.js and tailwind CSS"
+    },
+    "slideTRL": {
+        "label": "TRL range",
+        "minlabel": "Observe the fundamental principles",
+        "maxlabel": "Real system tested in operational environment"
+    },
+    "piechart": {
+        "label": "Vertical application tabs",
+        "magicalt": "show summary"
+    },
+    "verticalSlider": {
+        "title": "Scroll through the tabs with the Up and Down buttons",
+        "upbutton": "Up",
+        "downbutton": "Down"
+    },
+    "search": {
+        "filter": "Filter",
+        "match": "Match",
+        "maybe": "Maybe you intend",
+        "nolowrank": "The results you received don't fully meet your requirements. Contact our experts for further information or support. Below are the results that come close to what you requested.",
+        "noresults": "No documents found",
+        "cleartext": "Clear query",
+        "suggestion": "Search by suggestions",
+        "filteralt": "show/hide filters",
+        "label": "Search text",
+        "wait": "Searching...",
+        "suggestedLabel": "Search examples",
+        "textPlaceholder": "Search through the tabs or see suggestions...",
+        "description": "Search by entering keywords or applying filters.",
+        "showall": "Show all",
+        "suggested": [
+            "What can I use to recover precious metals ?",
+            "hydroponic cultivation",
+            "How can I characterize wood in situ ?"
+        ],
+        "clearfilters": "Clear filters",
+        "searchfilters": "Form filtered",
+        "applyfilters": "Show filtered"
+    },
+    "backbutton": {
+        "label": "Back to search",
+        "title": "Back"
+    },
+    "status": {
+        "empty": "intentionally empty"
+    }
+}

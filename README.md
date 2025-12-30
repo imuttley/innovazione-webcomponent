@@ -6,6 +6,19 @@ the main idea is to use webcomponents to create a smart search and filter system
 Authoring of webcomponents is done with react and typescript, and the build process is done with bun.
 Data is fetched from authorized public APIs of ENEA for managing autority of produced data.
 
+## Features
+
+- search and filter TECs (Technical and Engineering Competencies) and show results in a grid on a custom html page
+- manage events and states with custom events and custom elements
+- use tailwindcss for styling
+- use react and typescript for authoring
+- use bun for build process
+- use authorized public APIs of ENEA for managing autority of produced data
+
+## ide
+
+vscode with antigravity extension
+
 ## Installation
 
 load and use webcomponents in a semantic enriched html

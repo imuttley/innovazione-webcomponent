@@ -62,12 +62,13 @@ customElements.define("innovazione-event-logger", eventLoggerComponent);
 /* end of logger */
 
 const elem = document.getElementById("root") || null;
-const app = (
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+
 if (elem !== null) {
+  const app = (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
   if (import.meta.hot) {
     // With hot module reloading, `import.meta.hot.data` is persisted.
     const root = (import.meta.hot.data.root ??= createRoot(elem));

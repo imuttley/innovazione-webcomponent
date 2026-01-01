@@ -383,6 +383,9 @@
   .h-400 {
     height: calc(var(--spacing) * 400);
   }
+  .h-\[100px\] {
+    height: 100px;
+  }
   .max-h-0 {
     max-height: calc(var(--spacing) * 0);
   }
@@ -409,6 +412,9 @@
   }
   .w-100 {
     width: calc(var(--spacing) * 100);
+  }
+  .w-\[100px\] {
+    width: 100px;
   }
   .w-full {
     width: 100%;

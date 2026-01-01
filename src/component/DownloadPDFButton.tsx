@@ -64,7 +64,7 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
     const label = lang === 'it' ? 'Scarica PDF' : 'Download PDF';
     const title = lang === 'it' ? 'stampa' : 'print';
 
-    return <button title={title} aria-label={label} type="button" onClick={dwlpdf} className="action-button ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white">
+    return <button title={title} aria-label={label} type="button" onClick={dwlpdf} className="w-[100px] h-[100px] ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white">
         {label}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
     </button>
 }

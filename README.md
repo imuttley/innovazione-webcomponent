@@ -52,6 +52,14 @@ load and use webcomponents in a semantic enriched html
     </section>
     <!-- ... -->
 
+    <!-- ... -->
+    <section id="pdf-render">
+      <div class="container h-50">
+        <innovazione-pdf-button id="8740"></innovazione-pdf-button>
+      </div>
+    </section>
+    <!-- ... -->
+
     <!-- results events innovazione-results for click -->
     <section id="results-list">
       <div class="container h-400">

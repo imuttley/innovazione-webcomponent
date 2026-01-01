@@ -1,0 +1,45 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Static english page with innovazione-webcomp</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent@latest/dist/innovazione-webcomp.css"
+    />
+    <script
+      type="module"
+      crossorigin
+      src="https://cdn.jsdelivr.net/gh/imuttley/innovazione-webcomponent@latest/dist/innovazione-webcomp.js"
+    ></script>
+  </head>
+  <body>
+    <!-- ... -->
+    <!-- search events innovazione-search for data source -->
+    <section id="search-bar">
+      <div class="container h-150">
+        <innovazione-search
+          baseurl="https://ricerca-innovazione.enea.it"
+        ></innovazione-search>
+      </div>
+    </section>
+    <!-- ... -->
+
+    <!-- results events innovazione-results for click -->
+    <section id="results-list">
+      <div class="container h-400">
+        <innovazione-results
+          baseurl="https://ricerca-innovazione.enea.it"
+        ></innovazione-results>
+      </div>
+    </section>
+
+    <!-- ... -->
+    <section id="event-logger">
+      <div class="container h-50">
+        <innovazione-event-logger></innovazione-event-logger>
+      </div>
+    </section>
+    <!-- ... -->
+  </body>
+</html>

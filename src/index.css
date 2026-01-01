@@ -15,7 +15,14 @@ body {
   min-height: 100vh;
   position: relative;
 }
-body::before {
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: black;
+}
+/* body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -26,7 +33,7 @@ body::before {
   transform: rotate(-12deg) scale(1.35);
   animation: slide 30s linear infinite;
   pointer-events: none;
-}
+} */
 @keyframes slide {
   from {
     background-position: 0 0;

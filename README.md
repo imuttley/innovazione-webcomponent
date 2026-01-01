@@ -79,7 +79,7 @@ load and use webcomponents in a semantic enriched html
 ## security aspect
 
 the webcomponents are loaded from a global cdn, and rendered in client side, more that, the data is fetched from public apis of ENEA with a backend API gateway with policies of authorization and rate limiting.
-CORS policies are set to allow only the origin of the webcomponents baseurl.
+CORS policies are set to allow only the origin where webcomponents are loaded. es: https://localhost:3000/ or https://generic-site.it/
 
 ## examples
 

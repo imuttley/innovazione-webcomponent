@@ -1,4 +1,5 @@
-import * as pdfmake from 'pdfmake/build/pdfmake';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+//import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import type { Content, TableCell, TDocumentDefinitions, TFontDictionary } from 'pdfmake/interfaces';
 import type { SchedaData } from './type';
 import { decode } from 'html-entities';
@@ -6,6 +7,7 @@ import { BASE_URL } from "../costants";
 import type { AppTranslations } from './type';
 import { capitalizeWords, nameFamilynameDipt } from './utils';
 import { trlarrow, trlv2 } from './trlv2const';
+import { vfs as myVfs } from './vfs_fonts';
 
 
 /**
@@ -164,7 +166,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                     italics: 'Helvetica-Oblique',
                     bolditalics: 'Helvetica-BoldOblique'
                 },
-                Times: {
+                TimesRoman: {
                     normal: 'Times-Roman',
                     bold: 'Times-Bold',
                     italics: 'Times-Italic',
@@ -177,10 +179,16 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                     normal: 'ZapfDingbats'
                 },
                 TilliumWeb: {
-                    normal: `${BASE_URL}/fonts/titilliumweb-regular.ttf`,
-                    bold: `${BASE_URL}/fonts/titilliumweb-bold.ttf`,
-                    italics: `${BASE_URL}/fonts/titilliumweb-regular.ttf`,
-                    bolditalics: `${BASE_URL}/fonts/titilliumweb-extralight.ttf`
+                    normal: 'titilliumweb-regular.ttf',
+                    bold: 'titilliumweb-bold.ttf',
+                    italics: 'titilliumweb-regular.ttf',
+                    bolditalics: 'titilliumweb-extralight.ttf'
+                },
+                Roboto: {
+                    normal: 'Roboto-Regular.ttf',
+                    bold: 'Roboto-Bold.ttf',
+                    italics: 'Roboto-Italic.ttf',
+                    bolditalics: 'Roboto-BoldItalic.ttf'
                 }
             };
 
@@ -488,7 +496,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                     header: { fontSize: 16, bold: true, margin: [20, -100, 20, 40], alignment: 'center' },
                     footer: { fontSize: 11, bold: true, color: 'white' },
                     contact: { fontSize: 11, bold: false, color: 'white' },
-                    body: { fontSize: 11, margin: [20, 5, 20, 5], font: 'TilliumWeb', alignment: 'justify' },
+                    body: { fontSize: 11, margin: [20, 5, 20, 5], alignment: 'justify' },
                     chief: { fontSize: 11, margin: [10, 5, 12, 5], font: 'TilliumWeb', alignment: 'justify' },
                     section: { fontSize: 12, bold: true, margin: [20, 10, 20, 5], alignment: 'left' },
                     sectiontrl: { fontSize: 12, bold: true },
@@ -502,7 +510,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
                 },
                 defaultStyle: {
-                    font: 'TilliumWeb', // TilliumWeb Set default font
+                    font: 'Titilliumweb', // TilliumWeb Set default font
                 },
                 images: {
                     basebkg: 'data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QNoaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA5LjEtYzAwMyA3OS45NjkwYTg3ZmMsIDIwMjUvMDMvMDYtMjA6NTA6MTYgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9IjhEMUNCOEJCQTlFQTU2OUZFMkIyMTA5M0UxMkI4N0IxIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkIzMEUxREI1RDA4QjExRjA5RUNBRkRGODNFNDQ3OTM2IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkIzMEUxREI0RDA4QjExRjA5RUNBRkRGODNFNDQ3OTM2IiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCAyNi4xMSAoV2luZG93cykiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5YjE1NjJhMC1iZGY1LWQwNGUtYjA0MS0yMGVmMWVjMzAxZDIiIHN0UmVmOmRvY3VtZW50SUQ9IjhEMUNCOEJCQTlFQTU2OUZFMkIyMTA5M0UxMkI4N0IxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQABgQEBAUEBgUFBgkGBQYJCwgGBggLDAoKCwoKDBAMDAwMDAwQDA4PEA8ODBMTFBQTExwbGxscHx8fHx8fHx8fHwEHBwcNDA0YEBAYGhURFRofHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8f/8AAEQgAmwJYAwERAAIRAQMRAf/EAEwAAQEAAAAAAAAAAAAAAAAAAAAIAQEBAAAAAAAAAAAAAAAAAAAAAxABAAAAAAAAAAAAAAAAAAAAABEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AplZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//9k=',
@@ -513,9 +521,9 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                 }
             };
 
+            (<any>pdfMake).addVirtualFileSystem(myVfs);
             //const finalContent = insertTextList(docDefinition.content as Content[], myNewTextList);
-
-            const pdfDocGenerator = pdfmake.createPdf(docDefinition, undefined, fonts);
+            const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, fonts, myVfs);
             /*pdfDocGenerator.getBuffer((buffer: Uint8Array) => {
                 resolve(buffer);
             });*/

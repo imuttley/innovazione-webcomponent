@@ -22,7 +22,8 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
     const lang: "en" | "it" = langAttribute === 'it' ? 'it' : 'en';
     const dict = lang === 'it' ? dictit : dicten;
 
-    useEffect(() => {
+    const dwlpdf = async () => {
+
         if (id !== undefined) {
             const askform = async () => {
                 const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
@@ -33,20 +34,15 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
                     console.log("error fetching form data for cardnumber " + id + " status " + resp.status);
                 }
             }
-            askform();
+            await askform();
         }
-    }, []);
-
-
-    const dwlpdf = async () => {
-
         if (!formdata) {
             return;
         }
 
         const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
         const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
-
+        console.log("slug " + slug);
         const pdfBlob = await form2pdf(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
         const blob = new Blob([pdfBlob], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);

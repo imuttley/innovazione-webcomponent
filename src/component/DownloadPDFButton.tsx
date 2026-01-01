@@ -25,10 +25,8 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
     useEffect(() => {
         if (id !== undefined) {
             const askform = async () => {
-                //const resp = await fetch(`/api/form/${cardnumber}`);
                 const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
                 if (resp.status === 200) {
-                    // const form = JSON.parse(await resp.text()) as formTTEC;
                     const form = await resp.json() as formTTEC;
                     setFormdata(form);
                 } else {
@@ -46,7 +44,7 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
             return;
         }
 
-        const form = (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as unknown as SchedaData;
+        const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
         const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
 
         const pdfBlob = await form2pdf(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
@@ -64,7 +62,7 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
     const label = lang === 'it' ? 'Scarica PDF' : 'Download PDF';
     const title = lang === 'it' ? 'stampa' : 'print';
 
-    return <button title={title} aria-label={label} type="button" onClick={dwlpdf} className="w-[100px] h-[100px] ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white">
+    return <button title={title} aria-label={label} type="button" onClick={async () => await dwlpdf()} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
         {label}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
     </button>
 }

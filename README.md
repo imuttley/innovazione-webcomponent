@@ -90,7 +90,7 @@ CORS policies are set to allow only the origin of the webcomponents baseurl.
 
 ## TODO
 
-- add tests
+- add zero-trust reserved access
 - add bootstrap css from [bootstrap-italia](https://italia.github.io/bootstrap-italia/)
 - add more features
 

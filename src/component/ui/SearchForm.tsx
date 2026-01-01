@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, type ChangeEvent, type FormEvent, type EventHandler, type MouseEventHandler, useEffect } from 'react';
 import * as dictit from './it.json';
 import * as dicten from './en.json';
-import { BASE_URL } from '../contants';
+import { BASE_URL } from '../costants';
 
 interface SearchFormProps {
     onSearch: (query: string) => void;

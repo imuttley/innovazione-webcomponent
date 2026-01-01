@@ -15,7 +15,7 @@
     "@types/pdfmake": "^0.2.12",
     "clsx": "^2.1.1",
     "html-entities": "^2.6.0",
-    "pdfmake": "^0.2.21",
+    "pdfmake": "^0.3.0",
     "react": "^19",
     "react-dom": "^19",
     "react-to-webcomponent": "^2.0.1",

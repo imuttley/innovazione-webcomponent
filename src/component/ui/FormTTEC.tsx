@@ -4,7 +4,7 @@ import { decode } from "html-entities";
 import { useEffect, useState } from "react";
 import * as dictit from "./it.json";
 import * as dicten from "./en.json";
-import { BASE_URL } from "../contants";
+import { BASE_URL } from "../costants";
 
 interface formTTECProps {
     width: number;

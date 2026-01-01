@@ -8,7 +8,7 @@ import { faMailBulk, faPlusCircle, faTrashCan } from "@fortawesome/free-solid-sv
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { classify, scheda, SearchResult, sums } from "./lib/type";
 import SearchForm from "./ui/SearchForm";
-import { BASE_URL } from "./contants";
+import { BASE_URL } from "./costants";
 import welcome from "./lib/welcome";
 
 interface SearchInterfaceProps {

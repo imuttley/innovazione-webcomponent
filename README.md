@@ -81,9 +81,15 @@ load and use webcomponents in a semantic enriched html
 the webcomponents are loaded from a global cdn, and rendered in client side, more that, the data is fetched from public apis of ENEA with a backend API gateway with policies of authorization and rate limiting.
 CORS policies are set to allow only the origin of the webcomponents baseurl.
 
+## examples
+
+[examples](./examples)
+[static-en](https://imuttley.github.io/innovazione-webcomponent/pure-static-en.html)
+[static-it](https://imuttley.github.io/innovazione-webcomponent/pure-static-it.html)
+TODO [rebrand-designer-italia-kit](https://imuttley.github.io/innovazione-webcomponent/rebrand-designer-italia-kit.html)
+
 ## TODO
 
-- add example
 - add tests
 - add bootstrap css from [bootstrap-italia](https://italia.github.io/bootstrap-italia/)
 - add more features

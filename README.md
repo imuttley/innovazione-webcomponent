@@ -86,7 +86,7 @@ CORS policies are set to allow only the origin of the webcomponents baseurl.
 - [examples](./examples)
 - [static-en](https://imuttley.github.io/innovazione-webcomponent/pure-static-en.html)
 - [static-it](https://imuttley.github.io/innovazione-webcomponent/pure-static-it.html)
-- TODO [rebrand-designer-italia-kit](https://imuttley.github.io/innovazione-webcomponent/rebrand-designer-italia-kit.html)
+- [rebrand-designer-italia-kit](https://imuttley.github.io/innovazione-webcomponent/rebrand-designer-italia-kit.html)
 
 ## TODO
 

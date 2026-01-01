@@ -74,3 +74,14 @@ load and use webcomponents in a semantic enriched html
 
 the webcomponents are loaded from a global cdn, and rendered in client side, more that, the data is fetched from public apis of ENEA with a backend API gateway with policies of authorization and rate limiting.
 CORS policies are set to allow only the origin of the webcomponents baseurl.
+
+## TODO
+
+- add example
+- add tests
+- add bootstrap css from [bootstrap-italia](https://italia.github.io/bootstrap-italia/)
+- add more features
+
+## License
+
+BSD 3-Clause License

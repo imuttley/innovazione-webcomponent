@@ -1,0 +1,70 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { form2pdf } from "./lib/form2pdf";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { BASE_URL } from "./costants";
+import type { formTTEC, scheda, SchedaData } from "./lib/type";
+import * as dictit from "./ui/it.json";
+import * as dicten from "./ui/en.json";
+import React, { useEffect, useState } from "react";
+
+
+interface Printprops {
+    id: string
+}
+
+export const DownloadPDFButton: React.FC<Printprops> = ({
+    id
+}) => {
+
+    const [formdata, setFormdata] = useState<formTTEC | null>(null);
+
+    const langAttribute = document.getElementsByTagName('html')[0]!.getAttribute('lang');
+    const lang: "en" | "it" = langAttribute === 'it' ? 'it' : 'en';
+    const dict = lang === 'it' ? dictit : dicten;
+
+    useEffect(() => {
+        if (id !== undefined) {
+            const askform = async () => {
+                //const resp = await fetch(`/api/form/${cardnumber}`);
+                const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
+                if (resp.status === 200) {
+                    // const form = JSON.parse(await resp.text()) as formTTEC;
+                    const form = await resp.json() as formTTEC;
+                    setFormdata(form);
+                } else {
+                    console.log("error fetching form data for cardnumber " + id + " status " + resp.status);
+                }
+            }
+            askform();
+        }
+    }, []);
+
+
+    const dwlpdf = async () => {
+
+        if (!formdata) {
+            return;
+        }
+
+        const form = (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as unknown as SchedaData;
+        const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
+
+        const pdfBlob = await form2pdf(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
+        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${slug}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+
+    const label = lang === 'it' ? 'Scarica PDF' : 'Download PDF';
+    const title = lang === 'it' ? 'stampa' : 'print';
+
+    return <button title={title} aria-label={label} type="button" onClick={dwlpdf} className="action-button ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white">
+        {label}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
+    </button>
+}

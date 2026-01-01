@@ -75,6 +75,18 @@ Questo componente visualizza l'elenco dei risultati della ricerca in formato gri
 
 ---
 
+## 4. innovazione-pdf-button (`DownloadPDFButton.tsx`)
+
+Questo componente renderizza un pulsante per il download del PDF di una scheda specifica.
+
+### Parametri di Inizializzazione (Props)
+
+| Attributo | Tipo     | Descrizione                                      |
+| :-------- | :------- | :----------------------------------------------- |
+| `id`      | `string` | Identificativo univoco della scheda da scaricare |
+
+---
+
 ## Interfacce Eventi (`ComponentEvents.ts`)
 
 Tutti i componenti comunicano tramite standard DOM Events scatenati sull'oggetto `window` o tramite bubbling.

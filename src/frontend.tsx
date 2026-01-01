@@ -17,8 +17,7 @@ import ReactDOM from "react-dom/client";
 import { EventLogger } from "./component/EventLogger";
 import { Results } from "./component/Results";
 import { SearchBasic } from "./component/SearchBasic";
-import welcome from "./component/lib/welcome";
-
+import { DownloadPDFButton } from "./component/DownloadPDFButton";
 
 
 /* search */
@@ -54,6 +53,14 @@ const filterComponent = r2wc(Filters, React, ReactDOM as any, {
 customElements.define("innovazione-filter", filterComponent);
 /* end of filter */
 
+/* pdf */
+const pdfComponent = r2wc(DownloadPDFButton, React, ReactDOM as any, {
+  props: {
+    id: "string",
+  }
+});
+customElements.define("innovazione-pdf-button", pdfComponent);
+/* end of pdf */
 
 /* logger */
 const eventLoggerComponent = r2wc(EventLogger, React, ReactDOM as any, {

@@ -16,6 +16,9 @@ declare module "react" {
             'innovazione-results': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
                 baseurl: string;
             },
+            'innovazione-pdf-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+                id: string;
+            },
             'innovazione-event-logger': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
             }
         }

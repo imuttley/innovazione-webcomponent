@@ -93,6 +93,8 @@ Componente di servizio e di debug per la visualizzazione degli eventi emessi dai
 
 ### Parametri di Inizializzazione nessuno
 
+---
+
 ## Interfacce Eventi (`ComponentEvents.ts`)
 
 Tutti i componenti comunicano tramite standard DOM Events scatenati sull'oggetto `window` o tramite bubbling.

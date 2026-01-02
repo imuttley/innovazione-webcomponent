@@ -2,7 +2,7 @@
 
 Questa libreria esporta diversi Web Components basati su React, registrati tramite `react-to-webcomponent`.
 
-## 1. innovazione-search (`SearchBasic.tsx`)
+## tag: <innovazione-search> da (`SearchBasic.tsx`)
 
 Questo componente fornisce l'interfaccia di ricerca principale, includendo la barra di ricerca, il tasto per i filtri e l'integrazione con il componente dei filtri.
 
@@ -26,7 +26,7 @@ _fissato su costante `BASE_URL`_ 2025-12-30
 
 ---
 
-## 2. innovazione-filter (`Filters.tsx`)
+## tag <innovazione-filter> da (`Filters.tsx`)
 
 Questo componente visualizza i cluster di filtri (Applicazioni, Tecnologie, Licenze) e uno slider per il TRL.
 
@@ -56,7 +56,7 @@ Questo componente visualizza i cluster di filtri (Applicazioni, Tecnologie, Lice
 
 ---
 
-## 3. innovazione-results (`Results.tsx`)
+## tag <innovazione-results> da (`Results.tsx`)
 
 Questo componente visualizza l'elenco dei risultati della ricerca in formato grid.
 
@@ -75,7 +75,7 @@ Questo componente visualizza l'elenco dei risultati della ricerca in formato gri
 
 ---
 
-## 4. innovazione-pdf-button (`DownloadPDFButton.tsx`)
+## tag <innovazione-pdf-button> da (`DownloadPDFButton.tsx`)
 
 Questo componente renderizza un pulsante per il download del PDF di una scheda specifica.
 
@@ -86,6 +86,11 @@ Questo componente renderizza un pulsante per il download del PDF di una scheda s
 | `id`      | `string` | Identificativo univoco della scheda da scaricare |
 
 ---
+## tag <innovazione-event-logger> da (`EventLogger.tsx`) 
+
+Componente di servizio e di debug per la visualizzazione degli eventi emessi dai componenti
+
+### Parametri di Inizializzazione nessuno
 
 ## Interfacce Eventi (`ComponentEvents.ts`)
 

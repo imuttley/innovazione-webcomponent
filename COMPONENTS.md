@@ -78,6 +78,7 @@ Questo componente visualizza l'elenco dei risultati della ricerca in formato gri
 ## tag \<innovazione-pdf-button> da (`DownloadPDFButton.tsx`)
 
 Questo componente renderizza un pulsante per il download del PDF di una scheda specifica.
+Utilizza la libreria [`pdfmake`](https://github.com/bpampuch/pdfmake) per il download del PDF.
 
 ### Parametri di Inizializzazione (Props)
 

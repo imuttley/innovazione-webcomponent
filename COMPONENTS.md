@@ -1,6 +1,6 @@
-# Documentazione Web Components "innovazione"
+# Web Components "innovazione"
 
-Questa libreria esporta diversi Web Components basati su React, registrati tramite `react-to-webcomponent`.
+Questa libreria esporta Web Components basati su React, registrati tramite `react-to-webcomponent`.
 
 ## tag \<innovazione-search> da (`SearchBasic.tsx`)
 

@@ -7,6 +7,7 @@ import { FormTTEC } from "./ui/FormTTEC";
 import { extractSchedanum } from "./lib/utils";
 import { type SearchResult } from "./lib/type";
 import type { SearchEvent } from "./event/ComponentEvents";
+// import { Intangible } from "schema-dts";
 
 interface ResultsInterfaceProps {
     baseurl: string;

@@ -6,6 +6,8 @@ import type { formTTEC, scheda, SchedaData } from "./lib/type";
 import * as dictit from "./ui/it.json";
 import * as dicten from "./ui/en.json";
 import React, { useEffect, useState } from "react";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 
 
 interface Printprops {
@@ -42,10 +44,12 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
 
         const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
         const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
-        console.log("slug " + slug);
         const pdfBlob = await form2pdf(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
-        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
+        if (!pdfBlob) {
+            console.log("error creating pdf");
+            return;
+        }
+        const url = URL.createObjectURL(pdfBlob);
         const link = document.createElement('a');
         link.href = url;
         link.download = `${slug}.pdf`;
@@ -58,7 +62,7 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
     const label = lang === 'it' ? 'Scarica PDF' : 'Download PDF';
     const title = lang === 'it' ? 'stampa' : 'print';
 
-    return <button title={title} aria-label={label} type="button" onClick={async () => await dwlpdf()} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
+    return <button vocab="https://schema.org/" typeof="DownloadAction" property="potentialAction" title={title} aria-label={label} type="button" onClick={dwlpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
         {label}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
     </button>
 }

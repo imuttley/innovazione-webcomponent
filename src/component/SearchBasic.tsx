@@ -200,22 +200,22 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
             )
             }
 
-            <div className="action-buttons">
+            <div className="action-buttons" vocab="https://schema.org/" typeof="SearchAction">
                 {!isSearching && (resultsCount > 0) && query && (
                     <div className="mb-2 p-2">
                         <button title="Clear" type="button" onClick={handleClear} className="p-2 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] ml-2 text-white">
-                            {lastsearch} <FontAwesomeIcon icon={faTrashCan} size='lg' className="fa-fw" />
+                            <span property="query">{lastsearch}</span> <FontAwesomeIcon icon={faTrashCan} size='lg' className="fa-fw" />
                         </button>
                     </div>)}
                 {!isSearching && (resultsCount === 0) && query && (
                     <div className="flex flex-wrap justify-center gap-1 mb-1 items-center">
-                        <button title="Clear" type="button" onClick={handleClear} className="items-center justify-center p-2 w-100 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] text-white">
+                        <button title="Clear" type="button" onClick={handleClear} property="result" className="items-center justify-center p-2 w-100 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] text-white">
                             {dict.search.noresults} <FontAwesomeIcon icon={faTrashCan} size='xl' className="fa-fw" />
                         </button>
-                        <p className="text-center font-normal text-xl my-3">{dict.search.nolowrank}.
+                        <p className="text-center font-normal text-xl my-3" property="description">{dict.search.nolowrank}.
                         </p>
                         <p className="text-center font-bold text-xl text-white hover:underline my-3">
-                            <a href="mailto:trasferimento.tecnologico@enea.it" title={dict.footer.mailtitle} className="text-white mt-5 p-2 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa]">
+                            <a href="mailto:trasferimento.tecnologico@enea.it" title={dict.footer.mailtitle} property="contact" className="text-white mt-5 p-2 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa]">
                                 {dict.footer.contact} <FontAwesomeIcon icon={faMailBulk} size='lg' className="fa-fw" />
                             </a>
                         </p>

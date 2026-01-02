@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import * as dictit from "./it.json";
 import * as dicten from "./en.json";
 import { BASE_URL } from "../costants";
+// import { Intangible } from "schema-dts";
 
 interface formTTECProps {
     width: number;

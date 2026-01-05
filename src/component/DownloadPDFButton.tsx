@@ -6,8 +6,6 @@ import type { formTTEC, scheda, SchedaData } from "./lib/type";
 import * as dictit from "./ui/it.json";
 import * as dicten from "./ui/en.json";
 import React, { useEffect, useState } from "react";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 
 
 interface Printprops {

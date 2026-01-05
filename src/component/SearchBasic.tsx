@@ -177,15 +177,30 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
         handleSearchInternal(query, []);
     };
 
+    // const searchAndLastSearch = useCallback(() => {
+    //     if (isSearching && lastsearch === '') {
+    //         return (
+    //             <div></div>
+    //         )
+    //     }
+    //     if (!isSearching && lastsearch !== '') {
+    //         return (
+    //             <div></div>
+    //         )
+    //     }
+    //     return null;
+    // }, [isSearching, lastsearch]);
+
+
     return (
         <div className='flex flex-wrap justify-center gap-1 mb-1 '>
-            <span className="text-center mb-4 text-gray-500">{dict.search.description}</span>
+            {lastsearch === '' && <span className="text-center mb-4 text-gray-500">{dict.search.description}</span>}
 
             {lastsearch === '' && (
                 <SearchForm onSearch={handleSearch} onFilter={toggleFilter} onApplyFilters={handleApplyFilters} showFilter={showfilter} />
             )}
 
-            {records && records.length > 0 && (
+            {lastsearch === '' && records && records.length > 0 && (
 
                 <innovazione-filter id="filter_on_search" applications={JSON.stringify([])}
                     technologies={JSON.stringify(offtecs)}
@@ -201,12 +216,19 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
             }
 
             <div className="action-buttons" vocab="https://schema.org/" typeof="SearchAction">
+                {isSearching && (
+                    <div className="flex flex-col mt-4 items-center justify-center">
+                        <div className="spinner border-4 border-t-transparent border-gray-800 mx-8 rounded-full w-8 h-8 animate-spin" />
+                    </div>)
+                }
+
                 {!isSearching && (resultsCount > 0) && query && (
                     <div className="mb-2 p-2">
                         <button title="Clear" type="button" onClick={handleClear} className="p-2 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] ml-2 text-white">
                             <span property="query">{lastsearch}</span> <FontAwesomeIcon icon={faTrashCan} size='lg' className="fa-fw" />
                         </button>
                     </div>)}
+
                 {!isSearching && (resultsCount === 0) && query && (
                     <div className="flex flex-wrap justify-center gap-1 mb-1 items-center">
                         <button title="Clear" type="button" onClick={handleClear} property="result" className="items-center justify-center p-2 w-100 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] text-white">
@@ -220,6 +242,7 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
                             </a>
                         </p>
                     </div>)}
+
             </div>
         </div >
     );

@@ -1,20 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { form2pdf } from "./lib/form2pdf";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { form2pdf, form2pdfBlob, form2pdfOpen, form2pdfPrint } from "./lib/form2pdf";
+import { faDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { BASE_URL } from "./costants";
 import type { formTTEC, scheda, SchedaData } from "./lib/type";
 import * as dictit from "./ui/it.json";
 import * as dicten from "./ui/en.json";
 import React, { useEffect, useState } from "react";
+import { faArrowRightToFile } from "@fortawesome/free-solid-svg-icons/faArrowRightToFile";
 
 
 interface Printprops {
     id: string
 }
 
-export const DownloadPDFButton: React.FC<Printprops> = ({
-    id
-}) => {
+export const DownloadPDFButton: React.FC<Printprops> = ({ id }) => {
 
     const [formdata, setFormdata] = useState<formTTEC | null>(null);
 
@@ -26,7 +25,7 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
         if (formdata) {
             const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
             const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
-            const pdfBlob = await form2pdf(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
+            const pdfBlob = await form2pdfBlob(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
             if (!pdfBlob) {
                 console.log("error creating pdf");
                 return;
@@ -38,6 +37,34 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+    }
+
+    const openform = async () => {
+        const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
+        if (resp.status === 200) {
+            const form = await resp.json() as formTTEC;
+            if (formdata) {
+                const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
+                const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
+                await form2pdfOpen(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
+            }
+        } else {
+            console.log("error fetching form data for open cardnumber " + id + " status " + resp.status);
+        }
+    }
+
+    const printform = async () => {
+        const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
+        if (resp.status === 200) {
+            const form = await resp.json() as formTTEC;
+            if (formdata) {
+                const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
+                const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
+                await form2pdfPrint(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
+            }
+        } else {
+            console.log("error fetching form data for open cardnumber " + id + " status " + resp.status);
         }
     }
 
@@ -61,10 +88,36 @@ export const DownloadPDFButton: React.FC<Printprops> = ({
         }
     };
 
-    const label = lang === 'it' ? 'Scarica PDF' : 'Download PDF';
-    const title = lang === 'it' ? 'stampa' : 'print';
+    const openpdf = () => {
+        if (id !== undefined) {
+            openform();
+        }
+    };
 
-    return <button vocab="https://schema.org/" typeof="DownloadAction" property="potentialAction" title={title} aria-label={label} type="button" onClick={dwlpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
-        {label}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
-    </button>
+    const printpdf = () => {
+        if (id !== undefined) {
+            printform();
+        }
+    };
+
+    const label = lang === 'it' ? 'Scarica PDF' : 'Download PDF';
+    const title = lang === 'it' ? 'scarica' : 'download';
+    const label2 = lang === 'it' ? 'Apri PDF' : 'Open PDF';
+    const title2 = lang === 'it' ? 'apri' : 'open';
+    const label3 = lang === 'it' ? 'Stampa PDF' : 'Print PDF';
+    const title3 = lang === 'it' ? 'stampa' : 'print';
+
+    return (
+        <div className="flex">
+            <button vocab="https://schema.org/" typeof="PrintAction" property="potentialAction" title={title2} aria-label={label2} type="button" onClick={printpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
+                {label2}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
+            </button>
+            <button vocab="https://schema.org/" typeof="OpenAction" property="potentialAction" title={title3} aria-label={label3} type="button" onClick={openpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
+                {label3}<FontAwesomeIcon icon={faArrowRightToFile} size='xl' className="fa-fw" />
+            </button>
+            <button vocab="https://schema.org/" typeof="DownloadAction" property="potentialAction" title={title} aria-label={label} type="button" onClick={dwlpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
+                {label}<FontAwesomeIcon icon={faDownload} size='xl' className="fa-fw" />
+            </button>
+        </div>
+    )
 }

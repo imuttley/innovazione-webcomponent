@@ -5,6 +5,10 @@ node_modules
 out
 # dist
 *.tgz
+emsdk
+emsdk_env.sh
+emsdk_env.bat
+emsdk_env.ps1
 
 # code coverage
 coverage

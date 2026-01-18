@@ -565,6 +565,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
             }
         };
 
+
         (<any>pdfMake).addVirtualFileSystem(componentvfs);
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
         return pdfDocGenerator;

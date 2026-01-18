@@ -1,3 +1,4 @@
+'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { form2pdf, form2pdfBlob, form2pdfOpen, form2pdfPrint } from "./lib/form2pdf";
 import { faDownload, faPrint } from "@fortawesome/free-solid-svg-icons";

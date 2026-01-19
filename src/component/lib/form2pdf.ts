@@ -570,15 +570,8 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
 
         (<any>pdfMake).addVirtualFileSystem(componentvfs);
-        // https://pdfmake.github.io/docs/0.3/fonts/custom-fonts-client-side/vfs/ ???
-        // (<any>pdfMake).addFonts({
-        //     TilliumWeb: {
-        //         normal: 'TitilliumWeb-Regular.woff',
-        //         bold: 'TitilliumWeb-Bold.woff',
-        //         italics: 'TitilliumWeb-Italic.woff',
-        //         bolditalics: 'TitilliumWeb-BoldItalic.woff'
-        //     }
-        // });
+        // https://pdfmake.github.io/docs/0.3/fonts/custom-fonts-client-side/vfs/ 
+        (<any>pdfMake).addFonts({ TitilliumWeb: { normal: 'TitilliumWeb-Regular.woff', bold: 'TitilliumWeb-Bold.woff', italics: 'TitilliumWeb-Italic.woff' } });
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
         return pdfDocGenerator;
 

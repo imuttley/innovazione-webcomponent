@@ -200,44 +200,14 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
         // }
 
 
-        // const fonts: TFontDictionary = {
-        //     Courier: {
-        //         normal: 'Courier',
-        //         bold: 'Courier-Bold',
-        //         italics: 'Courier-Oblique',
-        //         bolditalics: 'Courier-BoldOblique'
-        //     },
-        //     Helvetica: {
-        //         normal: 'Helvetica',
-        //         bold: 'Helvetica-Bold',
-        //         italics: 'Helvetica-Oblique',
-        //         bolditalics: 'Helvetica-BoldOblique'
-        //     },
-        //     TimesRoman: {
-        //         normal: 'Times-Roman',
-        //         bold: 'Times-Bold',
-        //         italics: 'Times-Italic',
-        //         bolditalics: 'Times-BoldItalic'
-        //     },
-        //     Symbol: {
-        //         normal: 'Symbol'
-        //     },
-        //     ZapfDingbats: {
-        //         normal: 'ZapfDingbats'
-        //     },
-        //     TilliumWeb: {
-        //         normal: 'titilliumweb-regular.ttf',
-        //         bold: 'titilliumweb-bold.ttf',
-        //         italics: 'titilliumweb-regular.ttf',
-        //         bolditalics: 'titilliumweb-extralight.ttf'
-        //     },
-        //     Roboto: {
-        //         normal: 'Roboto-Regular.ttf',
-        //         bold: 'Roboto-Bold.ttf',
-        //         italics: 'Roboto-Italic.ttf',
-        //         bolditalics: 'Roboto-BoldItalic.ttf'
-        //     }
-        // };
+        const fonts: TFontDictionary = {
+            TilliumWeb: {
+                normal: 'TitilliumWeb-Regular.woff',
+                bold: 'TitilliumWeb-Bold.woff',
+                italics: 'TitilliumWeb-Italic.woff',
+                bolditalics: 'TitilliumWeb-BoldItalic.woff'
+            }
+        };
 
         const gridimgs: IGridImageData[] = [];
         const opt: IGridOptions = {
@@ -568,11 +538,12 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
             }
         };
 
+        const customfont = { TitilliumWeb: { normal: 'TitilliumWeb-Regular.woff', bold: 'TitilliumWeb-Bold.woff', italics: 'TitilliumWeb-Italic.woff' } };
 
         (<any>pdfMake).addVirtualFileSystem(componentvfs);
         // https://pdfmake.github.io/docs/0.3/fonts/custom-fonts-client-side/vfs/ 
-        (<any>pdfMake).addFonts({ TitilliumWeb: { normal: 'TitilliumWeb-Regular.woff', bold: 'TitilliumWeb-Bold.woff', italics: 'TitilliumWeb-Italic.woff' } });
-        const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+        //(<any>pdfMake).addFonts({ TitilliumWeb: { normal: 'TitilliumWeb-Regular.woff', bold: 'TitilliumWeb-Bold.woff', italics: 'TitilliumWeb-Italic.woff' } });
+        const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, fonts);
         return pdfDocGenerator;
 
     } catch (err) {

@@ -538,12 +538,10 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
             }
         };
 
-        const customfont = { TitilliumWeb: { normal: 'TitilliumWeb-Regular.woff', bold: 'TitilliumWeb-Bold.woff', italics: 'TitilliumWeb-Italic.woff' } };
-
         (<any>pdfMake).addVirtualFileSystem(componentvfs);
         // https://pdfmake.github.io/docs/0.3/fonts/custom-fonts-client-side/vfs/ 
-        //(<any>pdfMake).addFonts({ TitilliumWeb: { normal: 'TitilliumWeb-Regular.woff', bold: 'TitilliumWeb-Bold.woff', italics: 'TitilliumWeb-Italic.woff' } });
-        const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, fonts);
+        (<any>pdfMake).addFonts(fonts);
+        const pdfDocGenerator = pdfMake.createPdf(docDefinition);
         return pdfDocGenerator;
 
     } catch (err) {

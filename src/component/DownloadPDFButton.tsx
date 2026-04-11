@@ -45,10 +45,10 @@ export const DownloadPDFButton: React.FC<Printprops> = ({ id }) => {
         const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
         if (resp.status === 200) {
             const form = await resp.json() as formTTEC;
-            if (formdata) {
-                const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
-                const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
-                await form2pdfOpen(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
+            if (form) {
+                const sch = await (await fetch(`${BASE_URL}/v1/record/${form.scheda_num}`)).json() as SchedaData;
+                const slug = lang === 'it' ? form.slug_it : form.slug_en;
+                await form2pdfOpen(sch, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
             }
         } else {
             console.log("error fetching form data for open cardnumber " + id + " status " + resp.status);
@@ -59,10 +59,10 @@ export const DownloadPDFButton: React.FC<Printprops> = ({ id }) => {
         const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
         if (resp.status === 200) {
             const form = await resp.json() as formTTEC;
-            if (formdata) {
-                const form = await (await fetch(`${BASE_URL}/v1/record/${formdata.scheda_num}`)).json() as SchedaData;
-                const slug = lang === 'it' ? formdata.slug_it : formdata.slug_en;
-                await form2pdfPrint(form, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
+            if (form) {
+                const sch = await (await fetch(`${BASE_URL}/v1/record/${form.scheda_num}`)).json() as SchedaData;
+                const slug = lang === 'it' ? form.slug_it : form.slug_en;
+                await form2pdfPrint(sch, lang, dict, `${BASE_URL}/scheda/${lang}/${slug}`);
             }
         } else {
             console.log("error fetching form data for open cardnumber " + id + " status " + resp.status);
@@ -80,7 +80,7 @@ export const DownloadPDFButton: React.FC<Printprops> = ({ id }) => {
     }
 
     useEffect(() => {
-        getAndDownload();
+        if(formdata!==null) getAndDownload();
     }, [formdata]);
 
     const dwlpdf = () => {

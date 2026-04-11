@@ -110,10 +110,10 @@ export const DownloadPDFButton: React.FC<Printprops> = ({ id }) => {
 
     return (
         <div className="flex">
-            <button vocab="https://schema.org/" typeof="PrintAction" property="potentialAction" title={title2} aria-label={label3} type="button" onClick={printpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
+            <button vocab="https://schema.org/" typeof="PrintAction" property="potentialAction" title={title3} aria-label={label3} type="button" onClick={printpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
                 {label3}<FontAwesomeIcon icon={faPrint} size='xl' className="fa-fw" />
             </button>
-            <button vocab="https://schema.org/" typeof="OpenAction" property="potentialAction" title={title3} aria-label={label2} type="button" onClick={openpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
+            <button vocab="https://schema.org/" typeof="OpenAction" property="potentialAction" title={title2} aria-label={label2} type="button" onClick={openpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">
                 {label2}<FontAwesomeIcon icon={faArrowRightToFile} size='xl' className="fa-fw" />
             </button>
             <button vocab="https://schema.org/" typeof="DownloadAction" property="potentialAction" title={title} aria-label={label} type="button" onClick={dwlpdf} className="ml-5 p-2  bg-[#0b4b8a] hover:bg-[#2b6baa] mt-8 text-white rounded-md cursor-pointer">

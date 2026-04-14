@@ -41,6 +41,66 @@ export interface IGridOptions {
     maxHeight?: number;
 }
 
+interface ImageDimensions {
+    width: number;
+    height: number;
+}
+
+type AspectRatioLabel = "16:9" | "4:3" | "1:1" | "9:16" | "3:4";
+interface BestFit {
+    label: AspectRatioLabel;
+    ratio: number;
+    calculatedWidth: number;
+    calculatedHeight: number; // Altezza ideale mantenendo la larghezza attuale
+}
+
+export const getClosestAspectRatio = (width: number, height: number, fixedwidth: number): BestFit => {
+    const currentRatio = width / height;
+
+    const targets: { label: AspectRatioLabel; ratio: number }[] = [
+        { label: "16:9", ratio: 16 / 9 },
+        { label: "4:3", ratio: 4 / 3 },
+        { label: "1:1", ratio: 1 / 1 },
+        { label: "9:16", ratio: 9 / 16 },
+        { label: "3:4", ratio: 3 / 4 },
+    ];
+
+    // Troviamo il target con la differenza assoluta minore
+    const bestFit = targets.reduce((prev, curr) => {
+        return Math.abs(curr.ratio - currentRatio) < Math.abs(prev.ratio - currentRatio)
+            ? curr
+            : prev;
+    });
+
+    return {
+        label: bestFit.label,
+        ratio: bestFit.ratio,
+        // Esempio: calcoliamo la larghezza ideale basata sull'altezza attuale
+        calculatedWidth: Math.round(height * bestFit.ratio),
+        calculatedHeight: Math.round(fixedwidth / bestFit.ratio)
+    };
+};
+
+export const getImageDimensions = (base64: string, fixedwidth: number, maxheight: number): Promise<ImageDimensions> => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+
+        img.onload = () => {
+            const originalwidth = img.naturalWidth;
+            const originalheight = img.naturalHeight;
+            const originalaspectRatio = originalwidth / originalheight;
+            const closestaspectRatio = getClosestAspectRatio(originalwidth, originalheight, fixedwidth);
+            resolve({ width: fixedwidth, height: closestaspectRatio.calculatedHeight });
+        };
+
+        img.onerror = (error) => {
+            reject(new Error("Errore nel caricamento dell'immagine Base64"));
+        };
+
+        img.src = base64;
+    });
+};
+
 /**
  * Compone un documento PDF con una griglia di immagini e descrizioni.
  *
@@ -48,23 +108,25 @@ export interface IGridOptions {
  * @param options Opzioni per configurare la griglia
  * @returns La definizione del documento pdfMake (TDocumentDefinitions)
  */
-export function createImageGridPdf(imageData: IGridImageData[], options: IGridOptions) {
+export async function createImageGridPdf(imageData: IGridImageData[], options: IGridOptions) {
     const { columns, imageWidth, cellPadding, maxHeight } = options;
 
     // 1. Costruire il corpo della tabella (la nostra griglia)
     const tableBody: TableCell[][] = [];
     let currentRow: TableCell[] = [];
+    // const format = "4:3" | "16:9" | "1:1";
 
     for (let i = 0; i < imageData.length; i++) {
         const item = imageData[i];
 
+        const { width, height } = await getImageDimensions(item!.base64Image, imageWidth, maxHeight!);
+        const imgh = height > maxHeight! ? maxHeight! : height
         // Crea il contenuto della cella (immagine + testo)
         const cellContent: Content = {
             stack: [
                 {
                     image: item!.base64Image,
-                    width: imageWidth,
-
+                    fit: [imageWidth, imgh],
                     alignment: 'center',
                 },
                 {
@@ -249,7 +311,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                         opt.columns = 1;
                         imgrow.push(gridimgs[i]!);
                     }
-                    gridimg.push(createImageGridPdf(imgrow, opt));
+                    gridimg.push(await createImageGridPdf(imgrow, opt));
                 }
             }
             else

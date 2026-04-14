@@ -120,13 +120,14 @@ export async function createImageGridPdf(imageData: IGridImageData[], options: I
         const item = imageData[i];
 
         const { width, height } = await getImageDimensions(item!.base64Image, imageWidth, maxHeight!);
-        const imgh = height > maxHeight! ? maxHeight! : height
-        // Crea il contenuto della cella (immagine + testo)
+        const newimageheight = height > maxHeight! ? maxHeight! : height
+
+        console.log("image dim: " + width, height, newimageheight);
         const cellContent: Content = {
             stack: [
                 {
                     image: item!.base64Image,
-                    fit: [imageWidth, imgh],
+                    fit: [imageWidth, newimageheight],
                     alignment: 'center',
                 },
                 {
@@ -275,14 +276,19 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
         // };
 
         // 2026-4-13 
-        const prevh: number = ((lang === 'it' ? decode(formdata.base.d23_abstract).length : decode(formdata.base.d24_abstractENG).length) % 120) * 12;
+        const absrows: number = Math.round((lang === 'it' ? decode(formdata.base.d23_abstract).length : decode(formdata.base.d24_abstractENG).length) / 120);
+        const prevh = absrows * 12; // body font size + 1 
         const gridimgs: IGridImageData[] = [];
+
         const opt: IGridOptions = {
             columns: 2,
             imageWidth: 250,
-            maxHeight: 900 - prevh,
+            maxHeight: 250 * (16 / 9) - prevh,
             cellPadding: 6,
         }
+
+        console.log("rows: " + absrows + " opts: " + JSON.stringify(opt));
+
         // photos are sized by width for columns, but height must mantain aspect ratio.
         // so make constant maximixed area that  width_A * height_A = width_B * heigth_B = width_C * height_C 
 

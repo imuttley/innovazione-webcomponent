@@ -37,6 +37,8 @@ export interface IGridOptions {
     imageWidth: number;
     /** Spaziatura tra le celle della griglia */
     cellPadding: number;
+    /** max height admitted **/
+    maxHeight?: number;
 }
 
 /**
@@ -47,7 +49,7 @@ export interface IGridOptions {
  * @returns La definizione del documento pdfMake (TDocumentDefinitions)
  */
 export function createImageGridPdf(imageData: IGridImageData[], options: IGridOptions) {
-    const { columns, imageWidth, cellPadding } = options;
+    const { columns, imageWidth, cellPadding, maxHeight } = options;
 
     // 1. Costruire il corpo della tabella (la nostra griglia)
     const tableBody: TableCell[][] = [];
@@ -62,6 +64,7 @@ export function createImageGridPdf(imageData: IGridImageData[], options: IGridOp
                 {
                     image: item!.base64Image,
                     width: imageWidth,
+
                     alignment: 'center',
                 },
                 {
@@ -209,18 +212,24 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
         //     }
         // };
 
+        // 2026-4-13 
+        const prevh: number = ((lang === 'it' ? decode(formdata.base.d23_abstract).length : decode(formdata.base.d24_abstractENG).length) % 40) * 12;
         const gridimgs: IGridImageData[] = [];
         const opt: IGridOptions = {
             columns: 2,
             imageWidth: 250,
+            maxHeight: 400 - prevh,
             cellPadding: 6,
         }
+        // photos are sized by width for columns, but height must mantain aspect ratio.
+        // so make constant maximixed area that  width_A * height_A = width_B * heigth_B = width_C * height_C 
 
         let gridimg = [];
         if (Array.isArray(formdata.baseFoto)) {
-            formdata.baseFoto.forEach((obj) => {
+
+            formdata.baseFoto.splice(0, 2).forEach((obj) => {
                 if (obj.foto !== undefined) {
-                    if (obj.foto.length > 4) {
+                    if (obj.foto.length > 4) { //check is a probably valid base64 data
                         gridimgs.push({
                             base64Image: `data:${obj.mime};base64,${obj.foto}`,
                             description: lang === 'it' ? obj.didascaliaFoto : obj.didascaliaFotoENG
@@ -228,7 +237,9 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                     }
                 }
             })
+
             if (gridimgs.length > 0) {
+                // configure height from numeber of photos and previously text to stay in one single page
                 for (let i = 0; i < gridimgs.length; i += 2) {
                     const imgrow: IGridImageData[] = [];
                     if (i + 1 < gridimgs.length) {
@@ -407,11 +418,11 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                 // { svg: kepplogo, width: 120, margin: [20, 20, 0, 5], alignment: 'left', link:'https://innovazione.enea.it' },
                 // { svg: band(), width: 180, marginTop: -40, marginRight: 0, alignment:'right'},
                 { image: 'basebkg', width: 600 },
-                titlehead,
+                titlehead, // fixed height
 
-                { text: lang === 'it' ? decode(formdata.base.d23_abstract) : decode(formdata.base.d24_abstractENG), style: 'body', marginTop: 40 },
+                { text: lang === 'it' ? decode(formdata.base.d23_abstract) : decode(formdata.base.d24_abstractENG), style: 'body', marginTop: 40 }, // variable height
 
-                { stack: gridimg, unbreakable: true },
+                { stack: gridimg, unbreakable: true }, // fix max height unbreakable
 
                 {
                     stack: [
@@ -544,8 +555,8 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
         // ver 2.3.23 //(<any>pdfMake).addVirtualFileSystem(componentvfs);
         // https://pdfmake.github.io/docs/0.3/fonts/custom-fonts-client-side/vfs/ 
-        
-        console.log("fonts "+JSON.stringify(pdfMake.fonts));
+
+        console.log("fonts " + JSON.stringify(pdfMake.fonts));
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
         return pdfDocGenerator;
 

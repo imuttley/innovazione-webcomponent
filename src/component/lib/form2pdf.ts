@@ -275,12 +275,12 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
         // };
 
         // 2026-4-13 
-        const prevh: number = ((lang === 'it' ? decode(formdata.base.d23_abstract).length : decode(formdata.base.d24_abstractENG).length) % 40) * 12;
+        const prevh: number = ((lang === 'it' ? decode(formdata.base.d23_abstract).length : decode(formdata.base.d24_abstractENG).length) % 120) * 12;
         const gridimgs: IGridImageData[] = [];
         const opt: IGridOptions = {
             columns: 2,
             imageWidth: 250,
-            maxHeight: 400 - prevh,
+            maxHeight: 900 - prevh,
             cellPadding: 6,
         }
         // photos are sized by width for columns, but height must mantain aspect ratio.

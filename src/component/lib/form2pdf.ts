@@ -282,8 +282,8 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
         const opt: IGridOptions = {
             columns: 2,
-            imageWidth: 250,
-            maxHeight: 250 * (16 / 9) - prevh,
+            imageWidth: 210,
+            maxHeight: 210 * (16 / 9) - prevh,
             cellPadding: 6,
         }
 
@@ -499,10 +499,12 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                     ],
                     unbreakable: true
                 },
+
+
                 {
                     stack: [
-                        { text: dict.scheda.description, style: 'section' },
-                        { text: lang === 'it' ? decode(formdata.base.d23_25_27_descrizioneTecnologia) : decode(formdata.base.d24_26_28_descrizioneTecnologiaENG), style: 'body' },
+                        { text: dict.scheda.problem, style: 'section' },
+                        { text: lang === 'it' ? decode(formdata.base.d14_16_18_descrizioneProblema) : decode(formdata.base.d15_17_19_descrizioneProblemaENG), style: 'body' },
 
                     ],
                     unbreakable: true
@@ -510,8 +512,8 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
                 {
                     stack: [
-                        { text: dict.scheda.problem, style: 'section' },
-                        { text: lang === 'it' ? decode(formdata.base.d14_16_18_descrizioneProblema) : decode(formdata.base.d15_17_19_descrizioneProblemaENG), style: 'body' },
+                        { text: dict.scheda.description, style: 'section' },
+                        { text: lang === 'it' ? decode(formdata.base.d23_25_27_descrizioneTecnologia) : decode(formdata.base.d24_26_28_descrizioneTecnologiaENG), style: 'body' },
 
                     ],
                     unbreakable: true

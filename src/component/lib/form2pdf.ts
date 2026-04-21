@@ -327,6 +327,9 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
             gridimg.push({ text: '\n', marginTop: -16 });
         }
 
+        const titlelines = (length: number) => {
+            return Math.round(length / 60);
+        }
 
         const fontbylength = (length: number) => {
             if (length < 47)
@@ -419,7 +422,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
         }
 
         const band = () => {
-            return `<svg id="band" width="318" height="32" viewBox="0 0 318 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="trapezoidGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#052f4a;stop-opacity:1"></stop><stop offset="100%" style="stop-color:#51a2ff;stop-opacity:1"></stop></linearGradient></defs><polygon points="20,32 350,32 350,0 0,0" fill="url(#trapezoidGradient)"></polygon><text x="20" y="22" fill="white" font-size="20" font-weight="bold">${translatetech()}</text></svg>`;
+            return `<svg id="band" width="318" height="32" viewBox="0 0 318 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="trapezoidGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#052f4a;stop-opacity:1"></stop><stop offset="100%" style="stop-color:#51a2ff;stop-opacity:1"></stop></linearGradient></defs><polygon points="20,32 350,32 350,0 0,0" fill="url(#trapezoidGradient)"></polygon><text x="30" y="22" fill="white" font-size="20" font-weight="bold">${translatetech()}</text></svg>`;
         }
         const enealogo = () => {
             if (lang === 'it')
@@ -430,48 +433,56 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
         const kepplogo = '<svg id="keplogo" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 2834.6 1129.8">  <!-- Generator: Adobe Illustrator 29.8.2, SVG Export Plug-In . SVG Version: 2.1.1 Build 3)  -->  <defs>    <style>      .st0 {        fill: #2a6ab1;      }      .st1 {        fill: #1d1d1b;      }      .st2 {        fill: #004f9e;      }      .st3 {        fill: #5aa7dd;      }      .st4 {        fill: #2e2868;      }    </style>  </defs>  <g>    <rect class="st3" x="2531.8" y="362.7" width="107.5" height="278.8"/>    <path class="st3" d="M2725,448.3v107.5h-265.6c6.2-18.7,9.2-40.7,9.2-65.1s-1.4-28.8-4.3-42.4h260.7Z"/>  </g>  <g>    <path class="st1" d="M2169.7,801.7v-130.9h52.4c32.6,0,62.3-3.8,89.2-11.4,26.9-7.6,50-18.9,69.2-34.1,19.3-15.2,34.2-33.9,44.8-56.1,10.6-22.3,15.8-47.9,15.8-76.8v-1.4c0-28.5-5.3-53.5-15.8-75.1-10.6-21.6-25.3-39.5-44.1-53.7-18.8-14.2-41.5-24.9-67.9-32-26.4-7.1-55.7-10.7-87.8-10.7h-217v350h-290.9v-52.4h235.6v-116.4h-235.6v-48.9h252.8v-132.3h-403.4l11.1-13.8h-187.4l-147.9,194.3v-180.5h-161.2v482.2h161.2v-102.6l41.3-50.3,119.3,193.6h192.2l-25.5-40.6h599.6ZM1399.1,528.9l160-199.6v454.9l-160-255.3ZM2282,502.8c0,17.5-6.3,30.7-19,39.6-12.6,9-29.3,13.4-49.9,13.4h-43.4v-107.5h44.1c21.6,0,38.3,4.5,50.3,13.4,11.9,8.9,17.9,22.2,17.9,39.6v1.4Z"/>    <g>      <path class="st3" d="M109.6,440.3L531.7,58.5h485.7l-435.7,383.8-472-2Z"/>      <path class="st4" d="M493.4,945.3H109.6v-437.2l383.8,437.2Z"/>      <path class="st2" d="M606.3,468.1l535.5,603.3h-498.2L109.6,466l496.7,2Z"/>      <polygon class="st0" points="109.6 98.6 109.6 404.1 450.1 98.6 109.6 98.6"/>    </g>  </g></svg>';
 
-        let advantageAndTrl: Content;
-        let forceAndApps: Content;
+        // let advantageAndTrl: Content;
+        // let forceAndApps: Content;
 
-        if (trl() !== '' && uladvantages().length > 0) {
-            advantageAndTrl = {
-                columns: [
-                    [
-                        { text: dict.scheda.advantages, style: 'section' },
-                        adv,
-                    ],
-                    [
-                        { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
-                        { svg: trlv2, width: 280, marginLeft: 0 },
-                        { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) },
-                    ]
-                ],
-                unbreakable: true
-            }
-        }
-        if (trl() !== '' && uladvantages.length === 0) {
-            advantageAndTrl = { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
-                { svg: trlv2, width: 280, marginLeft: 0 },
-                { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) }
-        }
-        if (trl() === '' && uladvantages.length > 0) {
-            advantageAndTrl = { text: dict.scheda.advantages, style: 'section' }, adv
-        }
+        // if (trl() !== '' && uladvantages().length > 0) {
+        //     advantageAndTrl = {
+        //         columns: [
+        //             [
+        //                 { text: dict.scheda.advantages, style: 'section' },
+        //                 adv,
+        //             ],
+        //             [
+        //                 { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
+        //                 { svg: trlv2, width: 280, marginLeft: 0 },
+        //                 { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) },
+        //             ]
+        //         ],
+        //         unbreakable: true
+        //     }
+        // }
+        // if (trl() !== '' && uladvantages.length === 0) {
+        //     advantageAndTrl = { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
+        //         { svg: trlv2, width: 280, marginLeft: 0 },
+        //         { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) }
+        // }
+        // if (trl() === '' && uladvantages.length > 0) {
+        //     advantageAndTrl = { text: dict.scheda.advantages, style: 'section' }, adv
+        // }
 
 
-        if (ulapps.length > 0 && ulforce.length > 0) {
-            forceAndApps = {
-                columns: [
-                    [{ text: dict.scheda.force, style: 'section' }, force],
-                    [{ text: dict.scheda.applications, style: 'section' }, { ul: ulapps(), style: 'body' }]
-                ], unbreakable: true
-            };
-        }
-        if (ulapps.length > 0 && ulforce.length === 0) {
-            forceAndApps = { text: dict.scheda.applications, style: 'section' }, { ul: ulapps(), style: 'body' }
-        }
-        if (ulapps.length === 0 && ulforce.length > 0) {
-            forceAndApps = { text: dict.scheda.force, style: 'section' }, force
+        // if (ulapps.length > 0 && ulforce.length > 0) {
+        //     forceAndApps = {
+        //         columns: [
+        //             [{ text: dict.scheda.force, style: 'section' }, force],
+        //             [{ text: dict.scheda.applications, style: 'section' }, { ul: ulapps(), style: 'body' }]
+        //         ], unbreakable: true
+        //     };
+        // }
+        // if (ulapps.length > 0 && ulforce.length === 0) {
+        //     forceAndApps = { text: dict.scheda.applications, style: 'section' }, { ul: ulapps(), style: 'body' }
+        // }
+        // if (ulapps.length === 0 && ulforce.length > 0) {
+        //     forceAndApps = { text: dict.scheda.force, style: 'section' }, force
+        // }
+
+        const bckgrdheigth = 80;
+        const calculatedHeight = () => {
+            const titlefontsize = fontbylength(lang === 'it' ? decode(formdata.base.d9_titolo).length : decode(formdata.base.d10_titoloENG).length);
+            const lines = titlelines(lang === 'it' ? decode(formdata.base.d9_titolo).length : decode(formdata.base.d10_titoloENG).length);
+
+            return bckgrdheigth + titlefontsize * lines;
         }
 
         const docDefinition: TDocumentDefinitions = {
@@ -490,7 +501,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
 
             language: lang === 'it' ? 'it-IT' : 'en-GB',
 
-            pageMargins: [0, 60, 0, 71],
+            pageMargins: [5, 90, 5, 70],
             pageSize: 'A4',
             // Aggiunge un header a ogni pagina
             header: function (currentPage, pageCount, pageSize): Content {
@@ -499,7 +510,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                         [{ svg: kepplogo, width: 120, marginLeft: 20, alignment: 'left', link: 'https://innovazione.enea.it' }],
                         [{ svg: band(), width: 180, marginTop: 20, marginRight: 0, alignment: 'right' }],
                     ],
-                    marginTop: 5
+                    marginTop: 25
                 }
             },
             //
@@ -529,7 +540,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
             content: [
                 // { svg: kepplogo, width: 120, margin: [20, 20, 0, 5], alignment: 'left', link:'https://innovazione.enea.it' },
                 // { svg: band(), width: 180, marginTop: -40, marginRight: 0, alignment:'right'},
-                { image: 'basebkg', width: 600 },
+                { image: 'basebkg', width: 545, height: calculatedHeight(), style: 'titlebckgnd' },
                 titlehead, // fixed height
 
                 { text: lang === 'it' ? decode(formdata.base.d23_abstract) : decode(formdata.base.d24_abstractENG), style: 'body', marginTop: 40 }, // variable height
@@ -563,43 +574,43 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                     unbreakable: true
                 },
 
-                // {
-                //     columns: [
-                //         [
-                //             uladvantages().length > 0 ? { text: dict.scheda.advantages, style: 'section' } : { text: '\n', marginTop: -12 },
-                //             adv,
+                {
+                    columns: [
+                        [
+                            uladvantages().length > 0 ? { text: dict.scheda.advantages, style: 'section' } : { text: '\n', marginTop: -12 },
+                            adv,
 
-                //         ],
-                //         trl() !== '' ? [
-                //             { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
-                //             { svg: trlv2, width: 280, marginLeft: 0 },
-                //             { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) },
-                //         ] : []
-                //     ],
-                //     unbreakable: true
-                // },
+                        ],
+                        trl() !== '' ? [
+                            { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
+                            { svg: trlv2, width: 280, marginLeft: 0 },
+                            { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) },
+                        ] : []
+                    ],
+                    unbreakable: true
+                },
 
-                // {
-                //     columns: [
-                //         ulforce().length > 0 ? [ulforce().length > 0 ? { text: dict.scheda.force, style: 'section' } : { text: '\n', marginTop: -12 },
-                //             force,
-                //         ] : [
-                //             { text: dict.scheda.applications, style: 'section' },
-                //             { ul: ulapps(), style: 'body' },
-                //         ],
-                //         ulforce().length === 0 ? [] :
-                //             [
-                //                 { text: dict.scheda.applications, style: 'section' },
-                //                 { ul: ulapps(), style: 'body' },
-                //             ],
+                {
+                    columns: [
+                        ulforce().length > 0 ? [ulforce().length > 0 ? { text: dict.scheda.force, style: 'section' } : { text: '\n', marginTop: -12 },
+                            force,
+                        ] : [
+                            { text: dict.scheda.applications, style: 'section' },
+                            { ul: ulapps(), style: 'body' },
+                        ],
+                        ulforce().length === 0 ? [] :
+                            [
+                                { text: dict.scheda.applications, style: 'section' },
+                                { ul: ulapps(), style: 'body' },
+                            ],
 
 
-                //     ],
-                //     unbreakable: true
-                // },
+                    ],
+                    unbreakable: true
+                },
 
-                advantageAndTrl!,
-                forceAndApps!,
+                // advantageAndTrl!,
+                // forceAndApps!,
 
                 {
                     stack: [
@@ -638,8 +649,9 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                 // { text: 'trasferimento.tecnologico@enea.it', link:'mailto:trasferimento.tecnologico@enea.it', marginRight: 20, alignment: 'right', style: 'contact'}
             ],
             styles: {
+                titlebckgnd: { marginLeft: 20, marginTop: 10 },
                 simple: { fontSize: 11, marginLeft: 20 },
-                header: { fontSize: 16, bold: true, margin: [20, -100, 20, 40], alignment: 'center' },
+                header: { fontSize: 16, bold: true, margin: [20, -calculatedHeight() + 30, 20, 20], alignment: 'center' },
                 footer: { fontSize: 11, bold: true, color: 'white' },
                 contact: { fontSize: 11, bold: false, color: 'white' },
                 body: { fontSize: 11, margin: [20, 5, 20, 5], alignment: 'justify' },
@@ -648,7 +660,6 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                 sectiontrl: { fontSize: 12, bold: true },
                 sectiongen: { fontSize: 12, bold: true, marginTop: 10 },
                 sectionupdate: { fontSize: 12, bold: true, margin: [20, 10, 20, 5], alignment: 'right' },
-
                 sectionlicense: { fontSize: 12, bold: true, margin: [20, 10, 20, 5], alignment: 'left' },
                 rightside: { fontSize: 11, bold: false, margin: [20, 10, 20, 5], alignment: 'right' }, //TODO adjust right
                 leftside: { fontSize: 11, bold: false, marginLeft: 20, alignment: 'left' },

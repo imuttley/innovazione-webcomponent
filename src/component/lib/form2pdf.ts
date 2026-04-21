@@ -583,8 +583,8 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                         ],
                         trl() !== '' ? [
                             { text: trl(), style: 'sectiontrl', marginLeft: 0, marginTop: 10 },
-                            { svg: trlv2, width: 280, marginLeft: 0 },
-                            { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (245 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) },
+                            { svg: trlv2, width: 275, marginLeft: 0 },
+                            { svg: trlarrow, width: 26, height: 26, marginTop: -35, marginLeft: -7 + (235 / 9) * calcLevel(formdata.base.d53_TLR) + (10 / 9) * calcLevel(formdata.base.d53_TLR) },
                         ] : []
                     ],
                     unbreakable: true
@@ -618,7 +618,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
                         {
                             text: [
                                 { text: chief(), style: 'simple', decoration: 'underline' }, uppers().length > 0 ? { text: ' ; ' + uppers() } : { text: '' }
-                            ], marginLeft: 20,
+                            ], marginLeft: 20, marginRight: 20, alignment: 'justify',
                         },
                     ],
                     unbreakable: true

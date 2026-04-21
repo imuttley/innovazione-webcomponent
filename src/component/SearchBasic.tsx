@@ -126,8 +126,11 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
         const { min, max } = filterData!.minmax;
         let filt: scheda[] = [];
         if (min > 0 || max < 90) {
-            filt = records?.filter((obj) => obj.TLR.split("-").filter(o => parseInt(o) >= min).length > 0)
-                .filter((obj) => obj.TLR.split("-").filter(o => parseInt(o) <= max).length > 0);
+
+            filt = records?.filter((obj) => obj.TLR.split("-").filter(o => 10 * parseInt(o) >= min).length > 0)
+                .filter((obj) => obj.TLR.split("-").filter(o => 10 * parseInt(o) <= max).length > 0);
+            //const trls = records!.map((obj) => obj.TLR);
+
         } else {
             filt = records;
         }

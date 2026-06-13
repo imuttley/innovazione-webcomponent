@@ -99,7 +99,7 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
 
     const handleOnClick = () => {
         try {
-            sessionStorage.setItem('referrerUrl', window.location.href);
+            window.sessionStorage.setItem('referrerUrl', window.location.href);
         } catch (e) {
             console.error('Error saving referrer URL to sessionStorage:', e);
         }

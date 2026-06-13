@@ -72,6 +72,7 @@
         "match": "Match",
         "maybe": "Maybe you intend",
         "nolowrank": "The results you received don't fully meet your requirements. Contact our experts for further information or support. Below are the results that come close to what you requested.",
+        "timeout": "The search took too long. Please try again or change your query. If the problem persist, contact our experts for further information or support.",
         "noresults": "No documents found",
         "cleartext": "Clear query",
         "suggestion": "Search by suggestions",
@@ -80,7 +81,7 @@
         "wait": "Searching...",
         "suggestedLabel": "Search examples",
         "textPlaceholder": "Search through the tabs or see suggestions...",
-        "description": "Search by entering keywords or applying filters.",
+        "description": "Search by free text or applying filters.",
         "showall": "Show all",
         "suggested": [
             "What can I use to recover precious metals ?",
@@ -92,7 +93,7 @@
         "applyfilters": "Show filtered"
     },
     "backbutton": {
-        "label": "Back to search",
+        "label": "Go back",
         "title": "Back"
     },
     "status": {

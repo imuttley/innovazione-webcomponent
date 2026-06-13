@@ -72,6 +72,7 @@
         "match": "Contiene",
         "maybe": "Forse intendevi",
         "nolowrank": "I risultati ottenuti non soddisfano perfettamente la tua richiesta, contatta i nostri esperti per ulteriori informazioni o supporto. Di seguito i risultati che si avvicinano a quanto richiesto",
+        "timeout": "La ricerca ha richiesto troppo tempo. Riprova o modifica la query. Se il problema persiste, contatta i nostri esperti per ulteriori informazioni o supporto.",
         "noresults": "Nessun documento trovato",
         "cleartext": "Pulisci query",
         "suggestion": "Cerca tra i suggerimenti",
@@ -80,7 +81,7 @@
         "wait": "Ricercando...",
         "suggestedLabel": "Esempi di ricerca",
         "textPlaceholder": "Ricerca tra le schede o vedi i suggerimenti...",
-        "description": "Ricerca inserendo le parole chiave, o applicando i filtri.",
+        "description": "Ricerca con testo libero, o applicando i filtri.",
         "showall": "Mostra tutti",
         "suggested": [
             "cosa posso utilizzare per il recupero di metalli preziosi ?",
@@ -92,7 +93,7 @@
         "applyfilters": "Mostra schede filtrate"
     },
     "backbutton": {
-        "label": "Indietro alla ricerca",
+        "label": "Torna indietro",
         "title": "Indietro"
     },
     "status": {

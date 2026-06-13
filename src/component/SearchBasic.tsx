@@ -34,8 +34,9 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
     const [query, setQuery] = useState('');
     const [lastsearch, setLastsearch] = useState('');
     const [searchResultsRef, setSearchResultsRef] = useState<SearchEventInterface | null>(null);
+    const [timeout, setTimeoutVal] = useState<number>(0);
 
-
+    const MAX_TIME_FOR_SEARCH = 10 * 1000; // ten seconds for timeout
     const lang = document.getElementsByTagName('html')[0]!.getAttribute('lang') || 'en';
     const dict = lang === 'it' ? dictit : dicten;
 
@@ -69,14 +70,26 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
 
     const handleSearchInternal = useCallback(async (query: string, prevResults: SearchResult[]) => {
         setIsSearching(true);
+        setTimeoutVal(0);
+
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => {
+            controller.abort();
+        }, MAX_TIME_FOR_SEARCH);
+
+        const startTime = Date.now();
+
         try {
             const response = await fetch(`${BASE_URL}/v1/basicsearch`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ query: query, lang: lang || 'it' })
+                body: JSON.stringify({ query: query, lang: lang || 'it' }),
+                signal: controller.signal
             });
+
+            window.clearTimeout(timeoutId);
 
             if (!response.ok) {
                 const erroreDati = await response.json();
@@ -99,16 +112,24 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
             onceresult.sort((b, a) => a._score! - b._score!);
             setResultsCount(onceresult.length);
             dispatchEvent(new SearchEvent({ records: { total: onceresult.length, start: 0 }, query: query, found: onceresult }));
-        } catch (error) {
-            console.error("Search error:", error);
+        } catch (error: any) {
+            if (error.name === 'AbortError') {
+                console.error("Search timed out");
+            } else {
+                console.error("Search error:", error);
+            }
         } finally {
+            window.clearTimeout(timeoutId);
             setIsSearching(false);
+            const elapsed = Date.now() - startTime;
+            setTimeoutVal(elapsed);
         }
     }, [lang, searchResultsRef]);
 
     const handleClear = () => {
         setQuery('');
         setLastsearch('');
+        setTimeoutVal(0);
         dispatchEvent(new SearchEvent({ records: { total: 0, start: 0 }, query: query, found: [] }));
     };
 
@@ -231,13 +252,28 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
                             <span property="query">{lastsearch}</span> <FontAwesomeIcon icon={faTrashCan} size='lg' className="fa-fw" />
                         </button>
                     </div>)}
-
-                {!isSearching && (resultsCount === 0) && query && (
+                {/* NOT FOUND */}
+                {!isSearching && (resultsCount === 0) && (timeout < MAX_TIME_FOR_SEARCH) && query && (
                     <div className="flex flex-wrap justify-center gap-1 mb-1 items-center">
                         <button title="Clear" type="button" onClick={handleClear} property="result" className="items-center justify-center p-2 w-100 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] text-white">
                             {dict.search.noresults} <FontAwesomeIcon icon={faTrashCan} size='xl' className="fa-fw" />
                         </button>
                         <p className="text-center font-normal text-xl my-3" property="description">{dict.search.nolowrank}.
+                        </p>
+                        <p className="text-center font-bold text-xl text-white hover:underline my-3">
+                            <a href="mailto:trasferimento.tecnologico@enea.it" title={dict.footer.mailtitle} property="contact" className="text-white mt-5 p-2 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa]">
+                                {dict.footer.contact} <FontAwesomeIcon icon={faMailBulk} size='lg' className="fa-fw" />
+                            </a>
+                        </p>
+                    </div>)}
+
+                {/* TIMEOUT */}
+                {!isSearching && (resultsCount === 0) && (timeout >= MAX_TIME_FOR_SEARCH) && !query && (
+                    <div className="flex flex-wrap justify-center gap-1 mb-1 items-center">
+                        <button title="Clear" type="button" onClick={handleClear} property="result" className="items-center justify-center p-2 w-100 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] text-white">
+                            {dict.search.noresults} <FontAwesomeIcon icon={faTrashCan} size='xl' className="fa-fw" />
+                        </button>
+                        <p className="text-center font-normal text-xl my-3" property="description">{dict.search.timeout}.
                         </p>
                         <p className="text-center font-bold text-xl text-white hover:underline my-3">
                             <a href="mailto:trasferimento.tecnologico@enea.it" title={dict.footer.mailtitle} property="contact" className="text-white mt-5 p-2 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa]">

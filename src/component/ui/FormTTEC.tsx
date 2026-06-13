@@ -97,6 +97,15 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
         return <>{dict.search.maybe}</>
     }
 
+    const handleOnClick = () => {
+        try {
+            sessionStorage.setItem('referrerUrl', window.location.href);
+        } catch (e) {
+            console.error('Error saving referrer URL to sessionStorage:', e);
+        }
+        window.location.href = `${BASE_URL}/scheda/${lang}/${slug}`;
+    }
+
     //flex ***items-center***  justify-center transition-all duration-800 ${showfilter ? "max-h-400" : "max-h-0"}`
     /// center item on h 
 
@@ -104,7 +113,7 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
         <div className={`flex max-h-[${3 * height}px] justify-center transition-opacity duration-300 ease-in-out  ${hidden ? "opacity-50" : "opacity-100"}`}>
             {/*restrict card **max-w-4xl** */}
             <div className="w-full mx-auto p-4">
-                <div onClick={() => window.location.href = `${BASE_URL}/scheda/${lang}/${slug}`} className="bg-background-light dark:bg-background-dark shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-primary/20 dark:border-primary/30 cursor-pointer hover:bg-gray-200">
+                <div onClick={handleOnClick} className="bg-background-light dark:bg-background-dark shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-primary/20 dark:border-primary/30 cursor-pointer hover:bg-gray-200">
                     {/* no badge 2025-11-20*/}
                     {/* Badge of scores or none */}
                     {true && score !== null &&

@@ -268,7 +268,7 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
                     </div>)}
 
                 {/* TIMEOUT */}
-                {!isSearching && (resultsCount === 0) && (timeout >= MAX_TIME_FOR_SEARCH) && !query && (
+                {!isSearching && (resultsCount === 0) && (timeout >= MAX_TIME_FOR_SEARCH) && query && (
                     <div className="flex flex-wrap justify-center gap-1 mb-1 items-center">
                         <button title="Clear" type="button" onClick={handleClear} property="result" className="items-center justify-center p-2 w-100 rounded-full bg-[#0b4b8a] hover:bg-[#2b6baa] text-white">
                             {dict.search.noresults} <FontAwesomeIcon icon={faTrashCan} size='xl' className="fa-fw" />

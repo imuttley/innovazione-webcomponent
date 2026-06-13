@@ -1,0 +1,136 @@
+import PDFDocument from 'pdfkit';
+import blobStream from 'blob-stream';
+import type { SchedaData, AppTranslations } from './type';
+
+// Reusing some utilities from your original file
+import { capitalizeWords, nameFamilynameDipt } from './utils';
+import { trlarrow, trlv2 } from './trlv2const';
+
+export async function form2pdfBlob(formdata: SchedaData, lang: "en" | "it", dict: AppTranslations, fromurl: string): Promise<Blob | undefined> {
+    return await form2pdf(formdata, lang, dict, fromurl);
+}
+
+export async function form2pdfPrint(formdata: SchedaData, lang: "en" | "it", dict: AppTranslations, fromurl: string) {
+    const blob = await form2pdf(formdata, lang, dict, fromurl);
+    if (blob) {
+        const url = URL.createObjectURL(blob);
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        iframe.onload = () => {
+            iframe.contentWindow?.print();
+        };
+    }
+}
+
+export async function form2pdfOpen(formdata: SchedaData, lang: "en" | "it", dict: AppTranslations, fromurl: string) {
+    const blob = await form2pdf(formdata, lang, dict, fromurl);
+    if (blob) {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    }
+}
+
+/**
+ * Funzione principale che genera il PDF usando PDFKit.
+ * Sostituisce pdfmake per permettere la generazione di tag di accessibilità (PDF/UA).
+ */
+export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: AppTranslations, fromurl: string): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+        // 1. Inizializza il documento con l'Accessibilità (Tagging) abilitata
+        const doc = new PDFDocument({ 
+            tagged: true,             // ABILITA I TAG PDF/UA
+            displayTitle: true,       // Requisito per l'accessibilità
+            info: { 
+                Title: 'Innovazione - ENEA', 
+                Author: 'ENEA',
+                Keywords: 'Innovazione, ENEA',
+                Creator: 'ENEA',
+                Producer: 'ENEA',
+                Language: lang === 'it' ? 'it-IT' : 'en-US'
+            },
+            margins: { top: 50, bottom: 50, left: 40, right: 40 }
+        });
+
+        // 2. Prepara lo stream per generare il Blob
+        const stream = doc.pipe(blobStream());
+
+        // 3. Crea la radice dell'albero della struttura del documento
+        const rootStructure = doc.struct('Document');
+        doc.addStructure(rootStructure);
+
+        // ----------------------------------------------------
+        // LOGICA DI IMPAGINAZIONE E CONTENUTO
+        // ----------------------------------------------------
+
+        // Esempio: Disegna l'intestazione loghi (richiede conversioni e posizionamenti manuali)
+        // doc.image(base64logo, x, y, { width: 100 });
+
+        // Titolo (Tag H1)
+        rootStructure.add(
+            doc.struct('H1', () => {
+                doc.fontSize(24).text('INNOVAZIONE ENEA', { align: 'center' });
+                doc.moveDown(1);
+            })
+        );
+
+        // Sezione Informazioni Principali (Tag Sect)
+        const infoSect = doc.struct('Sect');
+        rootStructure.add(infoSect);
+
+        infoSect.add(
+            doc.struct('H2', () => {
+                doc.fontSize(16).text(lang === 'it' ? 'Dettagli Scheda' : 'Card Details', { underline: true });
+                doc.moveDown(0.5);
+            })
+        );
+
+        // Paragrafo con Titolo Breve / Titolo Esteso
+        infoSect.add(
+            doc.struct('P', () => {
+                doc.fontSize(12).font('Helvetica-Bold').text(dict['Titolo breve'] + ' / ' + dict['Titolo esteso'] + ': ');
+                doc.font('Helvetica').text(formdata?.name || '');
+                doc.moveDown();
+            })
+        );
+
+        // Paragrafo con le Keywords
+        infoSect.add(
+            doc.struct('P', () => {
+                doc.fontSize(12).font('Helvetica-Bold').text(dict['Keywords'] + ': ');
+                doc.font('Helvetica').text(formdata?.keyword || '');
+                doc.moveDown();
+            })
+        );
+
+        // Esempio: Griglia immagini (richiede calcoli layout manuali in PDFKit)
+        if (formdata.image_grid && formdata.image_grid.length > 0) {
+            const gallerySect = doc.struct('Sect');
+            rootStructure.add(gallerySect);
+            
+            gallerySect.add(
+                doc.struct('H3', () => {
+                    doc.fontSize(14).font('Helvetica-Bold').text('Galleria');
+                    doc.moveDown(0.5);
+                })
+            );
+
+            // In una implementazione completa, qui andrebbe il ciclo forEach su formdata.image_grid
+            // con calcolo delle x e y per disporle a griglia e doc.image() avvolto in un tag 'Figure'.
+        }
+
+        // ----------------------------------------------------
+        // CHIUSURA DOCUMENTO E RISOLUZIONE PROMISE
+        // ----------------------------------------------------
+        doc.end();
+
+        stream.on('finish', () => {
+            resolve(stream.toBlob('application/pdf'));
+        });
+        
+        stream.on('error', (err) => {
+            reject(err);
+        });
+    });
+}

@@ -1,4 +1,4 @@
-import type { scheda, SearchResult } from "../lib/type";
+import type { SearchResult } from "../lib/type";
 
 export interface FilterEventInterface {
     appselected: string[];

@@ -27,7 +27,6 @@ const Filters: React.FC<FiltersInterfaceProps> = ({
     const json_technologies = JSON.parse(technologies) as { cls: string }[];
     const json_trl = JSON.parse(trl) as { max: number, min: number };
 
-
     const [minmax, setMinMax] = useState({ min: json_trl.min, max: json_trl.max });
     const [refresh, setRefresh] = useState(0);
     const [appselected, setAppselected] = useState<string[]>([]);

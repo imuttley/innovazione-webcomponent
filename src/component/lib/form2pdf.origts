@@ -12,8 +12,8 @@ import { trlarrow, trlv2 } from './trlv2const';
 import type { TCreatedPdf } from 'pdfmake/build/pdfmake';
 import pdfMake from 'pdfmake/build/pdfmake';
 import * as fontcontainer from '../../../ENEAfontContainer'; // pdfmake v3
-import { PDFDocument, PDFName, PDFDict, PDFArray } from 'pdf-lib';
-import { width } from '@fortawesome/free-solid-svg-icons/faArrowRightToFile';
+// import { PDFDocument, PDFName, PDFDict, PDFArray } from 'pdf-lib';
+// import { width } from '@fortawesome/free-solid-svg-icons/faArrowRightToFile';
 
 // var _global = typeof window === 'object' ? window : typeof global === 'object' ? global : typeof self === 'object' ? self : this;
 // if (typeof _global.pdfMake !== 'undefined' && typeof _global.pdfMake.addVirtualFileSystem !== 'undefined') {
@@ -729,7 +729,7 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
         // // Aggiungi il tag all'albero principale
         // (structTreeRootDict.get(PDFName.of('K')) as PDFArray).push(h1Ref);
 
-        // // Salva il PDF modificato
+        // Salva il PDF modificato
         // const finalPdfBytes = await pdfDoc.save();
 
         return pdfDocGenerator;

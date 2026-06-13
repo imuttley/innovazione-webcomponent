@@ -36,7 +36,7 @@ export const SearchBasic: React.FC<SearchInterfaceProps> = ({
     const [searchResultsRef, setSearchResultsRef] = useState<SearchEventInterface | null>(null);
     const [timeout, setTimeoutVal] = useState<number>(0);
 
-    const MAX_TIME_FOR_SEARCH = 10 * 1000; // ten seconds for timeout
+    const MAX_TIME_FOR_SEARCH = 25 * 1000; // 25 seconds for timeout
     const lang = document.getElementsByTagName('html')[0]!.getAttribute('lang') || 'en';
     const dict = lang === 'it' ? dictit : dicten;
 

@@ -72,7 +72,7 @@
         "match": "Match",
         "maybe": "Maybe you intend",
         "nolowrank": "The results you received don't fully meet your requirements. Contact our experts for further information or support.",
-        "timeout": "The search took too long. Please try again or change your query. If the problem persist, contact our experts for further information or support.",
+        "timeout": "The search took too long due to a temporary overload of the IT systems. Please try again later. If the problem persists, contact our experts for further information or support.",
         "noresults": "No documents found",
         "cleartext": "Clear query",
         "suggestion": "Search by suggestions",

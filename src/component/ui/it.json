@@ -72,7 +72,7 @@
         "match": "Contiene",
         "maybe": "Forse intendevi",
         "nolowrank": "I risultati ottenuti non soddisfano perfettamente la tua richiesta, contatta i nostri esperti per ulteriori informazioni o supporto.",
-        "timeout": "La ricerca ha richiesto troppo tempo. Riprova o modifica la query. Se il problema persiste, contatta i nostri esperti per ulteriori informazioni o supporto.",
+        "timeout": "La ricerca ha richiesto troppo tempo a causa di un sovraccarico momentaneo dei sistemi informatici. Riprova più tardi. Se il problema persiste, contatta i nostri esperti per ulteriori informazioni o supporto.",
         "noresults": "Nessun documento trovato",
         "cleartext": "Pulisci query",
         "suggestion": "Cerca tra i suggerimenti",

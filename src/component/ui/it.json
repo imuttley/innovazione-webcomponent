@@ -71,7 +71,7 @@
         "filter": "Filtri",
         "match": "Contiene",
         "maybe": "Forse intendevi",
-        "nolowrank": "I risultati ottenuti non soddisfano perfettamente la tua richiesta, contatta i nostri esperti per ulteriori informazioni o supporto. Di seguito i risultati che si avvicinano a quanto richiesto",
+        "nolowrank": "I risultati ottenuti non soddisfano perfettamente la tua richiesta, contatta i nostri esperti per ulteriori informazioni o supporto.",
         "timeout": "La ricerca ha richiesto troppo tempo. Riprova o modifica la query. Se il problema persiste, contatta i nostri esperti per ulteriori informazioni o supporto.",
         "noresults": "Nessun documento trovato",
         "cleartext": "Pulisci query",

@@ -1,6 +1,6 @@
 import { faCamera, faFilter, faMicrophone, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, type ChangeEvent, type FormEvent, type EventHandler, type MouseEventHandler, useEffect } from 'react';
+import { useState, type ChangeEvent, type FormEvent, type EventHandler, type MouseEventHandler, useEffect, useRef } from 'react';
 import * as dictit from './it.json';
 import * as dicten from './en.json';
 import { BASE_URL } from '../costants';
@@ -17,13 +17,13 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, onFilter, onApplyFilt
     const [query, setQuery] = useState<string>("");
     const [suggestions, setSuggestions] = useState<string[]>(['']);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-
+    const [displayPlaceholder, setDisplayPlaceholder] = useState<string>('');
     // typewriter effect 
     const [placeholderText, setPlaceholderText] = useState<string>('');
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const [loopNum, setLoopNum] = useState<number>(0);
     const [typingSpeed, setTypingSpeed] = useState<number>(150);
-
+    const [maxVisibleChars, setMaxVisibleChars] = useState<number>(45);
 
     const lang = document.getElementsByTagName('html')[0]!.getAttribute('lang') || 'en';
     const dict = lang === 'it' ? dictit : dicten;
@@ -45,13 +45,37 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, onFilter, onApplyFilt
 
     }, [loopNum, lang]);
 
+    const inputRef = useRef<HTMLInputElement>(null);
 
+
+    useEffect(() => {
+        if (!inputRef.current) return;
+
+        const observer = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                // entry.contentRect.width ti dà la larghezza interna (senza padding) dell'input.
+                // Dividiamo per 9 (stima media dei pixel per carattere, regolabile).
+                const chars = Math.floor(entry.contentRect.width / 9);
+                setMaxVisibleChars(Math.max(10, chars)); // minimo 10 caratteri
+            }
+        });
+
+        observer.observe(inputRef.current);
+        return () => observer.disconnect();
+    }, [showFilter]); // Si riaggancia se l'input viene smontato/rimontato a causa di showFilter
+
+    useEffect(() => {
+        setDisplayPlaceholder(
+            placeholderText.length > maxVisibleChars
+                ? "..." + placeholderText.substring(placeholderText.length - maxVisibleChars)
+                : placeholderText
+        );
+    }, [placeholderText, maxVisibleChars]);
     useEffect(() => {
         // Gestione del timer per l'effetto di scrittura/cancellazione
         const handleTyping = () => {
             const i = loopNum % suggestions.length;
             const fullText = suggestions[i] || '';
-            const cursor = "..";
 
             setPlaceholderText(
                 isDeleting
@@ -106,11 +130,14 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, onFilter, onApplyFilt
     };
 
 
+
+
     return (
         <div className="w-full p-5 mx-auto">
             <form onSubmit={handleSubmit} className="relative w-full text-gray-900">
                 <div className="flex items-center gap-2 relative">
                     {!showFilter && (<input
+                        ref={inputRef}
                         type="text"
                         value={query}
                         aria-label={dict.search.suggestion}
@@ -118,7 +145,8 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, onFilter, onApplyFilt
                         onFocus={handleFocus}
                         onChangeCapture={handleChange}
                         className="text-black flex-1 px-4 py-3 border border-gray-300 bg-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        placeholder={placeholderText}
+                        placeholder={displayPlaceholder}
+                        aria-placeholder={displayPlaceholder}
                     />)}
                     {query && (
                         <button

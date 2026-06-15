@@ -519,22 +519,28 @@ export async function form2pdf(formdata: SchedaData, lang: "en" | "it", dict: Ap
             //
             // old kep
             // { image: 'logokep', width: 180, margin: [20, 20, 0, 5], alignment: 'left' },
-
+            //  { text: "www.enea.it", fontSize: 11, color: 'white', marginLeft: 50, marginTop: -5, alignment: 'left' }
             footer: function (currentPage, pageCount): Content {
                 return {
                     stack: [
                         {
                             canvas: [{ type: 'rect', x: 0, y: 0, w: 600, h: 70, color: '#1b67b2' }]
                         },
-                        { svg: enealogo(), link: 'https://www.enea.it', width: 150, marginTop: -50, marginLeft: 20, alignment: 'left' },
-                        { text: 'Knowledge Exchange Program', alignment: 'right', marginRight: 20, marginTop: -28, style: 'footer' },
+                        {
+                            stack: [
+                                { svg: enealogo(), link: 'https://www.enea.it', width: 150, marginTop: -50, marginLeft: 20, alignment: 'left' },
+
+                            ],
+                        },
+                        { text: 'Knowledge Exchange Program', alignment: 'right', marginRight: 20, marginTop: -35, style: 'footer' },
                         { text: 'trasferimento.tecnologico@enea.it', link: 'mailto:trasferimento.tecnologico@enea.it', marginRight: 20, alignment: 'right', style: 'contact' },
+                        { text: 'innovazione.enea.it', link: 'https://innovazione.enea.it', fontSize: 11, color: 'white', marginTop: -25, marginLeft: 240 },
                         {
                             text: '' + currentPage.toString() + ' / ' + pageCount.toString(),
                             alignment: 'center',
                             fontSize: 8,
                             color: 'white',
-                            margin: [0, 0, 40, 0] // [left, top, right, bottom]
+                            margin: [0, 15, 40, 0] // [left, top, right, bottom]
                         }
                     ]
                 };

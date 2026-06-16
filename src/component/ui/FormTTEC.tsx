@@ -106,6 +106,13 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
         window.location.href = `${BASE_URL}/scheda/${lang}/${slug}`;
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleOnClick();
+        }
+    }
+
     //flex ***items-center***  justify-center transition-all duration-800 ${showfilter ? "max-h-400" : "max-h-0"}`
     /// center item on h 
 
@@ -113,7 +120,14 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
         <div className={`flex max-h-[${3 * height}px] justify-center transition-opacity duration-300 ease-in-out  ${hidden ? "opacity-50" : "opacity-100"}`}>
             {/*restrict card **max-w-4xl** */}
             <div className="w-full mx-auto p-4">
-                <div onClick={handleOnClick} className="bg-background-light dark:bg-background-dark shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-primary/20 dark:border-primary/30 cursor-pointer hover:bg-gray-200">
+                <div 
+                    onClick={handleOnClick} 
+                    onKeyDown={handleKeyDown}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Apri scheda: ${title}`}
+                    className="bg-background-light dark:bg-background-dark shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row border border-primary/20 dark:border-primary/30 cursor-pointer hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
                     {/* no badge 2025-11-20*/}
                     {/* Badge of scores or none */}
                     {true && score !== null &&
@@ -125,7 +139,7 @@ const FormTTEC: React.FC<formTTECProps> = ({ width, height, cardnumber, chunk, s
                     <div className={`md:w-1/4 pt-8 pl-8 object-cover transition-opacity duration-500 ${thumb ? "opacity-100" : "opacity-0"}`}>
                         {title && thumb && (//w-full
                             // altetnative text is nearby warning
-                            <img alt="" width={width} height={height} className={`max-h-[200px] `} src={thumb} />
+                            <img alt={`Immagine di copertina: ${title}`} width={width} height={height} className={`max-h-[200px] `} src={thumb} />
                         )}
                     </div>
 

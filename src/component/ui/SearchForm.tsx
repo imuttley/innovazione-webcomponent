@@ -170,9 +170,10 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, onFilter, onApplyFilt
                             {dict.search.applyfilters}
                         </button>
                     )}
-                    <button aria-label={dict.search.label} title={dict.search.label} type="submit" className={`ml-2 h-12 w-12 flex items-center justify-center bg-[#0b4b8a] hover:bg-green-500 text-white rounded-full transition-opacity duration-200 ${!query && 'opacity-50 bg-gray-600 cursor-not-allowed'}`} disabled={!query}>
-                        <FontAwesomeIcon icon={faSearch} size='lg' className="fa-fw" />
-                    </button>
+                    {!showFilter && (
+                        <button aria-label={dict.search.label} title={dict.search.label} type="submit" className={`ml-2 h-12 w-12 flex items-center justify-center bg-[#0b4b8a] hover:bg-green-500 text-white rounded-full transition-opacity duration-200 ${!query && 'opacity-50 bg-gray-600 cursor-not-allowed'}`} disabled={!query}>
+                            <FontAwesomeIcon icon={faSearch} size='lg' className="fa-fw" />
+                        </button>)}
                     <button aria-label={dict.search.filter}
                         title={dict.search.filter}
                         type="button" onClick={onFilter}

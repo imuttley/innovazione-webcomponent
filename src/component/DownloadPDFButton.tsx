@@ -70,17 +70,33 @@ export const DownloadPDFButton: React.FC<Printprops> = ({ id }) => {
     }
 
     const askform = async () => {
-        const resp = await fetch(`${BASE_URL}/v1/publiccard/${id}`);
+
+        const resp = await fetch(`${BASE_URL}/v1/obtainpdf/${lang}/${id}`, {
+            headers: {
+                "x-api-key": "37218973821793827189217938129"
+            }
+        });
         if (resp.status === 200) {
-            const form = await resp.json() as formTTEC;
-            setFormdata(form);
+            const attach = resp.headers.get("content-disposition");
+            let file = "";
+            if (attach) {
+                file = attach.split("filename=")[1]?.replaceAll(`"`, ``) || `${id}_${lang}.pdf`;
+            }
+            const pdfBlob = await resp.blob();
+            const url = URL.createObjectURL(pdfBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${file}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         } else {
             console.log("error fetching form data for cardnumber " + id + " status " + resp.status);
         }
     }
 
     useEffect(() => {
-        if(formdata!==null) getAndDownload();
+        if (formdata !== null) getAndDownload();
     }, [formdata]);
 
     const dwlpdf = () => {
